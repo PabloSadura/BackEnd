@@ -1,30 +1,59 @@
-[{
-    "id":1,
-    "title": "Funko Pop Harry Potter Albus Dumbledore #04 Original",
-    "price": 7770,
-    "thumbnail":"./img/albusDombledore.png"
-},{
-    "id":2,
-    "title": "Figura de acción Child's Play Chucky Child's Play 2 3362 de Funko Pop! Movies",
-    "price": 11000,
-    "thumbnail":"./img/chukyChids.jpg"
-},
-{
-    "id":3,
-    "title": "Funko Pop Tmnt Ii The Secret Of The Ooze Super Shredder",
-    "price": 7260,
-    "thumbnail":"./img/superSheredder.png"
-},
-{
-    "id": 4,
-    "title": "Funko Pop Keychain Hulk Thor Ragnarok",
-    "price":2407,
-    "thumbnail":"./img/HulkRagnarok.png"
-},
-{
-    "id":5,
-    "title":"Funko Pop! Alien Independence Day #283",
-    "price": 6241,
-    "thumbnail": "alienIndependence.png"
-}
-]
+    [{
+        "id":0,
+        "title":"Funko Pop! Vegeta (training) #701",
+        "price": 6241,
+        "thumbnail": "vegueta.png"
+    },{
+        "id":1,
+        "title": "Funko Pop Harry Potter Albus Dumbledore #04 Original",
+        "price": 7770,
+        "thumbnail":"./img/albusDombledore.png"
+    },{
+        "id":2,
+        "title": "Figura de acción Child's Play Chucky Child's Play 2 3362 de Funko Pop! Movies",
+        "price": 11000,
+        "thumbnail":"./img/chukyChids.jpg"
+    },
+    {
+        "id":3,
+        "title": "Funko Pop Tmnt Ii The Secret Of The Ooze Super Shredder",
+        "price": 7260,
+        "thumbnail":"./img/superSheredder.png"
+    },
+    {
+        "id": 4,
+        "title": "Funko Pop Keychain Hulk Thor Ragnarok",
+        "price":2407,
+        "thumbnail":"./img/HulkRagnarok.png"
+    },
+    {
+        "id":5,
+        "title":"Funko Pop! Alien Independence Day #283",
+        "price": 6241,
+        "thumbnail": "alienIndependence.png"
+    },
+    {
+        "id":6,
+        "title":"Funko Pop #264 The Twins",
+        "price": 7412,
+        "thumbnail": "theTwins.png"
+    },
+    {
+        "id":7,
+        "title":"Funko Pop Tmnt Ii The Secret Of The Ooze Raphael #1135",
+        "price": 7485,
+        "thumbnail": "ninjaTurtle.png"
+    },
+    {
+        "id":8,
+        "title":"Funko Pop! Thor Infinity War #286",
+        "price": 5945,
+        "thumbnail": "thorRagnarok.png"
+    },
+    {
+        "id":9,
+        "title":"Funko Pop! Krillin #706",
+        "price": 6241,
+        "thumbnail": "krillin.png"
+    }
+    ]
