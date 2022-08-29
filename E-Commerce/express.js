@@ -9,7 +9,8 @@ app.get("/", (req, res) => {
 app.get("/productos", (req, res) => {
   const list = prod.getAll();
 
-  res.send(`Productos en el archivo: ${list}`);
+  res.send(`<h3>Productos en el archivo:</h3>
+             ${list}`);
 });
 
 app.get("/productosRandom", (req, res) => {
@@ -19,7 +20,7 @@ app.get("/productosRandom", (req, res) => {
     ? res.send(`
         <h2>#${number}</h2>
       <h2> Titulo: ${list.title}</h2>
-      <h3>Precio: ${list.price}</h3> 
+      <h3>Precio: $ ${list.price}</h3> 
       <img src="${list.thumbnail}" alt="">`)
     : res.send("No existe producto");
 });
