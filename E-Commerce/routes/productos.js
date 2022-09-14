@@ -4,6 +4,7 @@ const router = Router();
 const products = [];
 const error = { error: "Producto no encontrado" };
 let id = 0;
+
 router.get("/", (req, res) => {
   res.json({ products });
 });
@@ -37,7 +38,9 @@ router.post("/", (req, res) => {
   try {
     products.push({ id: id, ...product });
     res.send(product);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 });
 router.delete("/:id", (req, res) => {
   const { id } = req.params;

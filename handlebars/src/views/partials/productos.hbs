@@ -1,0 +1,27 @@
+<h2 class="text-center">Productos</h2>
+{{#if products}}
+  <div class="col-md-6 offset-3 mt-4">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Titulo</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Imagen</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+          <tr>
+            <th>{{this.id}}</th>
+            <td>{{this.title}}</td>
+            <td>$ {{this.price}}</td>
+            <td>{{this.thumbnail}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{else}}
+  <h2 class="text-center">No existen productos</h2>
+{{/if}}
