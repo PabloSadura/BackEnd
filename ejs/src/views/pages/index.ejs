@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('../partial/head') %>
+    <%- include ('../partials/head.ejs')%>
   </head>
   <body>
-    <%- include('../partial/header') %>
-    <h3>Estoy en la mitad</h3>
-    <% if(render){%>
-    <ul>
-      <$usuarios.forEach(usuarios=>{%>
-      <li><%=usuarios.nombre %> <%=usuario.apellido %></li>
-      <%})%>
-    </ul>
-    <%}%> <%- include('../partial/footer') %>
+    <header class="container">
+    <%- include ('../partials/navBar.ejs')%>
+      </nav>
+     <main>
+      
+     </main>
+    </header>
   </body>
 </html>

@@ -1,22 +1,25 @@
 const { Router } = require("express");
+const routerPug = Router();
 const fs = require("fs");
-const handleRouter = Router();
+
 const products = [];
 
 const producto = fs.readFileSync("productos.txt", "utf-8");
 const list = JSON.parse(producto);
 products.push(...list);
 let id = products.length;
-handleRouter.get("/", (req, res) => {
-  res.render("./layouts/carousel.hbs");
+
+routerPug.get("/", (req, res) => {
+  res.render("index");
 });
-handleRouter.get("/agregar", (req, res) => {
-  res.render("./partials/formulario.hbs");
+
+routerPug.get("/agregar", (req, res) => {
+  res.render("formulario");
 });
-handleRouter.get("/productos", (req, res) => {
-  res.render("./partials/productos.hbs", { products });
+routerPug.get("/productos", (req, res) => {
+  res.render("producto", { products });
 });
-handleRouter.post("/agregar", (req, res) => {
+routerPug.post("/agregar", (req, res) => {
   try {
     id++;
     const product = req.body;
@@ -27,4 +30,4 @@ handleRouter.post("/agregar", (req, res) => {
   }
 });
 
-module.exports = handleRouter;
+module.exports = routerPug;

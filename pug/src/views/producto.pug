@@ -1,0 +1,22 @@
+
+include index.pug
+
+.col-md-6.offset-3.mt-4
+if products
+    table.table.table-striped
+        thead
+            tr
+            th(scope='col') #
+            th(scope='col') Titulo
+            th(scope='col') Precio
+            th(scope='col') Imagen
+        tbody
+        each items of products
+            tr
+                th= items.id
+                td= items.title
+                td= items.price 
+                td= items.thumbnail
+else 
+    h2 No hay productos
+

@@ -1,22 +1,26 @@
 const { Router } = require("express");
 const fs = require("fs");
-const handleRouter = Router();
+const ejsRouter = Router();
 const products = [];
 
 const producto = fs.readFileSync("productos.txt", "utf-8");
 const list = JSON.parse(producto);
 products.push(...list);
 let id = products.length;
-handleRouter.get("/", (req, res) => {
-  res.render("./layouts/carousel.hbs");
+console.log(products);
+
+ejsRouter.get("/", (req, res) => {
+  res.render("./pages/index.ejs");
 });
-handleRouter.get("/agregar", (req, res) => {
-  res.render("./partials/formulario.hbs");
+ejsRouter.get("/agregar", (req, res) => {
+  res.render("./partials/formulario.ejs");
 });
-handleRouter.get("/productos", (req, res) => {
-  res.render("./partials/productos.hbs", { products });
+
+ejsRouter.get("/productos", (req, res) => {
+  res.render("./partials/productos.ejs", { productos: products });
 });
-handleRouter.post("/agregar", (req, res) => {
+
+ejsRouter.post("/agregar", (req, res) => {
   try {
     id++;
     const product = req.body;
@@ -27,4 +31,4 @@ handleRouter.post("/agregar", (req, res) => {
   }
 });
 
-module.exports = handleRouter;
+module.exports = ejsRouter;
