@@ -9,7 +9,8 @@ const formproduct = document.getElementById("form-product");
 const title = document.getElementById("title");
 const price = document.getElementById("price");
 const thumbnail = document.getElementById("thumbnail");
-
+let id = 1;
+// genero un chat desde un form
 messageBox.onsubmit = (e) => {
   e.preventDefault();
   socketClient.emit("mensaje", {
@@ -20,7 +21,6 @@ messageBox.onsubmit = (e) => {
   message.value = "";
   email.value = "";
 };
-
 socketClient.on("bienvenida", (data) => {
   generateChat(data);
 });
@@ -28,15 +28,13 @@ socketClient.on("respuesta", (data) => {
   console.log(data);
   generateChat(data);
 });
-socketClient.on("products", (data) => {
-  generateCards(...data);
-});
 
 formproduct.onsubmit = (e) => {
   e.preventDefault();
   socketClient.emit("newProduct", {
+    id: id++,
     title: title.value,
-    price: price.value,
+    price: parseFloat(price.value),
     thumbnail: thumbnail.value,
   });
   title.value = "";
@@ -44,27 +42,23 @@ formproduct.onsubmit = (e) => {
   thumbnail.value = "";
 };
 
-function generateCards(prod) {
-  console.log(prod);
-  const prodInner = prod
-    .map((el) => {
-      return `<div class="card p-2 mb-2 " style="width: 18rem">
-      <div class="text-center">
-      <img src="${el.thumbnail}" class="card-img-top w-75" alt="..." style="height: 15rem"/>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">${el.title}</h5>
-        <p class="card-text text-end"><strong>$ ${el.price} </strong></p>
-        <div class="text-center">
-        <a href="#" class="btn btn-light">Comprar</a>
-        </div>
-      </div>
-    </div>`;
-    })
-    .join(" ");
+socketClient.on("totalProducts", (data) => {
+  generateProd(data);
+});
 
-  cards.innerHTML = prodInner;
-}
+socketClient.on("respuestaProd", (data) => {
+  console.log(data);
+  generateProd(...data);
+});
+
+// socketClient.on("upload", (prod) => {
+//   console.log(prod);
+//   generateProd(...prod);
+// });
+// socketClient.on("products", (data) => {
+//   generateProd(...data);
+// });
+
 function generateChat(msj) {
   const inner = msj
     .map((el) => {
@@ -76,4 +70,19 @@ function generateChat(msj) {
     })
     .join(" ");
   chat.innerHTML = inner;
+}
+
+function generateProd(product) {
+  console.log(product);
+  const inner = product
+    .map((el) => {
+      return `<tr>
+                <th>${el.id}</th>
+                <td>${el.title}</td>
+                <td>$ ${el.price}</td>
+                <td><a href="">Comprar</a></td>
+              </tr>`;
+    })
+    .join(" ");
+  cards.innerHTML = inner;
 }

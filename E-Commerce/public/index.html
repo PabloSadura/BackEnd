@@ -14,10 +14,15 @@
     <main class="container">
       <section class="row">
         <h2 class="text-center my-4">Productos</h2>
-        <div
-          class="d-flex justify-content-evenly flex-wrap me-3 mb-2"
-          id="cards"
-        ></div>
+        <table class="table table-striped border p-1">
+          <thead>
+            <th scope="col">ID</th>
+            <th scope="col">Titulo</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Comprar</th>
+          </thead>
+          <tbody id="cards"></tbody>
+        </table>
       </section>
       <section class="row">
         <div class="col-md-6">
