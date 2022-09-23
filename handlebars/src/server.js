@@ -1,7 +1,13 @@
 const express = require("express");
-const app = express();
+const fs = require("fs");
+const { Server: SoketServer } = require("socket.io");
 const hbs = require("express-handlebars");
+const http = require("http");
 const handleRouter = require("../routes/handlebarsRoute.js");
+
+const app = express();
+const httpServer = http.createServer(app);
+const socketServer = new SoketServer(httpServer);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -20,6 +26,9 @@ app.engine(
 
 app.set("views", "./src/views");
 app.set("view engine", "hbs");
+app.get("/", (req, res) => {
+  res.sendFile("index.html");
+});
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

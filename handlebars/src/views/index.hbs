@@ -26,8 +26,59 @@
       </nav>
     </header>
     <main>
-   
-    {{{body}}}
+      <section>
+        <h2 class="text-center">Agregar productos</h2>
+        <div class="mx-4">
+         {{>formulario}}
+        </div>
+      </section>
+      <section>
+        <h2 class="text-center">Productos</h2>
+{{#if products}}
+  <div class="col-md-6 offset-3 mt-4">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Titulo</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Imagen</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+          <tr>
+            <th>{{this.id}}</th>
+            <td>{{this.title}}</td>
+            <td>$ {{this.price}}</td>
+            <td>{{this.thumbnail}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{else}}
+  <h2 class="text-center">No existen productos</h2>
+{{/if}}
+      </section>
+      <section>
+        <h3>Chat</h3>
+        <form >
+        <input type="email" name="email" id="email" placeholder="Email">
+        <textarea name="text" id="text" cols="30" rows="10"></textarea>
+
+        </form>
+
+        <table>
+          <thead>
+            <th scope="col">Usuario</th>
+            <th scope="col">Titulo</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Imagen</th>
+          </thead>
+        </table>
+      </section>
+
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>

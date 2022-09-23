@@ -2,11 +2,13 @@ const { Router } = require("express");
 const fs = require("fs");
 const handleRouter = Router();
 const products = [];
+let id = 0;
 
 const producto = fs.readFileSync("productos.txt", "utf-8");
 const list = JSON.parse(producto);
 products.push(...list);
-let id = products.length;
+id = products.length;
+
 handleRouter.get("/", (req, res) => {
   res.render("./layouts/carousel.hbs");
 });
