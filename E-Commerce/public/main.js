@@ -9,6 +9,7 @@ const formproduct = document.getElementById("form-product");
 const title = document.getElementById("title");
 const price = document.getElementById("price");
 const thumbnail = document.getElementById("thumbnail");
+const tableProd = document.getElementById("table-prod");
 let id = 1;
 // genero un chat desde un form
 messageBox.onsubmit = (e) => {
@@ -19,7 +20,6 @@ messageBox.onsubmit = (e) => {
     mensaje: message.value,
   });
   message.value = "";
-  email.value = "";
 };
 socketClient.on("bienvenida", (data) => {
   generateChat(data);
@@ -29,6 +29,7 @@ socketClient.on("respuesta", (data) => {
   generateChat(data);
 });
 
+// formulario para la carga de productos
 formproduct.onsubmit = (e) => {
   e.preventDefault();
   socketClient.emit("newProduct", {
@@ -51,21 +52,13 @@ socketClient.on("respuestaProd", (data) => {
   generateProd(...data);
 });
 
-// socketClient.on("upload", (prod) => {
-//   console.log(prod);
-//   generateProd(...prod);
-// });
-// socketClient.on("products", (data) => {
-//   generateProd(...data);
-// });
-
 function generateChat(msj) {
   const inner = msj
     .map((el) => {
       return `<tr>
-    <td>${el.fecha}</td>
-    <td>${el.email}</td>
-    <td>${el.mensaje}</td>
+    <td >${el.fecha}</td>
+    <td style="color:blue"><strong>${el.email}</strong></td>
+    <td class="fst-italic" style="color: green">${el.mensaje}</td>
   </tr>`;
     })
     .join(" ");
