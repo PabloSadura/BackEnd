@@ -10,7 +10,7 @@ const title = document.getElementById("title");
 const price = document.getElementById("price");
 const thumbnail = document.getElementById("thumbnail");
 const tableProd = document.getElementById("table-prod");
-let id = 1;
+let id = 0;
 // genero un chat desde un form
 messageBox.onsubmit = (e) => {
   e.preventDefault();
@@ -44,6 +44,7 @@ formproduct.onsubmit = (e) => {
 };
 
 socketClient.on("totalProducts", (data) => {
+  id = data.length + 1;
   generateProd(data);
 });
 

@@ -1,20 +1,30 @@
 const fs = require("fs");
-
-const chat = [];
-const products = [];
+let chat = [];
+let products = [];
+let readFile = 0;
 let id = 0;
 
-const save = async (file, data) => {
+const save = (file, msj) => {
   try {
-    const info = await fs.promises.appendFile(
-      file,
-      JSON.stringify(data),
-      () => {
-        console.log("Enviado");
-      }
-    );
+    fs.promises.writeFile(file, msj, () => {
+      console.log("cargado...");
+    });
   } catch (error) {
-    console.log(error);
+    console.log("Error", error);
+  }
+};
+
+const read = (file, data) => {
+  try {
+    fs.promises.readFile(file, "utf-8").then((res) => {
+      if (res) {
+        const info = JSON.parse(res);
+        data.push(...info);
+        console.log(data);
+      }
+    });
+  } catch (error) {
+    console.log("Error", error);
   }
 };
 
@@ -22,8 +32,14 @@ module.exports = function (io) {
   io.on("connection", (socket) => {
     console.log("Cliente conectado");
 
-    socket.emit("bienvenida", chat);
+    if (readFile < 1) {
+      read("products.txt", products);
+      readFile++;
+    }
+
     socket.emit("totalProducts", products);
+
+    socket.emit("bienvenida", chat);
 
     socket.on("disconnect", () => {
       console.log("Cliente desconectado");
@@ -31,15 +47,16 @@ module.exports = function (io) {
     // recibo, grabo y devuelvo un respuesta de chat
     socket.on("mensaje", (mensaje) => {
       chat.push(mensaje);
-      save("chat.txt", chat);
       const msj = JSON.stringify(chat);
+      save("chat.txt", msj);
 
       io.sockets.emit("respuesta", chat);
     });
     // recibo, guardo y devuelvo un producto
     socket.on("newProduct", (prod) => {
       products.push(prod);
-      save("products.txt", products);
+      const product = JSON.stringify(products);
+      save("products.txt", product);
       io.sockets.emit("respuestaProd", products);
     });
   });
