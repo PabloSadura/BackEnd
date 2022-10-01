@@ -2,23 +2,23 @@ const { Router } = require("express");
 const fs = require("fs");
 const productsRouter = Router();
 let products = [];
+let id = 0;
 const login = true;
 const middlewareLogin = (req, res, next) => {
   login ? next() : res.send("No tiene permiso");
 };
 
-// leo el archivo de productos
-
-const read = (file, array) => {
-  fs.promises.readFile(file, "utf-8").then((response) => {
+(() => {
+  fs.promises.readFile("products.txt", "utf-8").then((response) => {
     const data = JSON.parse(response);
-    array.push(...data);
+    products.push(...data);
+    id = products.length;
   });
-};
+})();
+
 // muestro los productos completos o no dependiendo de un ID
 productsRouter.get("/:id?", (req, res) => {
   const { id } = req.params;
-  read("products.txt", products);
   if (id) {
     const info = products.find((el) => el.id === Number(id));
     res.json(info);
@@ -30,21 +30,32 @@ productsRouter.get("/:id?", (req, res) => {
 // agrego productos dependiendo usuario admin
 productsRouter.post("/", middlewareLogin, (req, res) => {
   const product = req.body;
-  read("products.txt", products);
-  products.push(product);
-  fs.promises.appendFile("products.txt", JSON.stringify(products));
-  res.status(200).send("se agrego correctamente");
+  id = id++;
+  products.push({ id: id, ...product });
+  fs.promises.writeFile("products.txt", JSON.stringify(products));
+  res.json({ mensaje: "producto agregado correctamente" });
 });
 
 // Modifico productos por id solo usuario admin
 productsRouter.put("/:id", middlewareLogin, (req, res) => {
-  res.send("Se actualizo correctamente");
+  const { title, price, thumbnail } = req.body;
+  const { id } = req.params;
+  const data = products.find((el) => el.id === Number(id));
+  data.title = title;
+  data.price = price;
+  data.thumbnail = thumbnail;
+  fs.promises.writeFile("products.txt", JSON.stringify(products));
+  res.json({ mensaje: "producto modificado correctamente" });
 });
 
 // Elimino productos por ID solo admin
 
 productsRouter.delete("/:id", middlewareLogin, (req, res) => {
-  res.send("Se borro correctamente");
+  const { id } = req.params;
+  const index = products.findIndex((el) => el.id === Number(id));
+  products.splice(index, 1);
+  fs.promises.writeFile("products.txt", JSON.stringify(products));
+  res.json({ mensaje: "Se borro correctamente" });
 });
 
 module.exports = productsRouter;
