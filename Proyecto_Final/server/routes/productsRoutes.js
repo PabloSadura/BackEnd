@@ -31,7 +31,8 @@ productsRouter.get("/:id?", (req, res) => {
 productsRouter.post("/", middlewareLogin, (req, res) => {
   const product = req.body;
   id = id++;
-  products.push({ id: id, ...product });
+  const timestamp = Date();
+  products.push({ id: id, timestamp: timestamp, ...product });
   fs.promises.writeFile("products.txt", JSON.stringify(products));
   res.json({ mensaje: "producto agregado correctamente" });
 });
