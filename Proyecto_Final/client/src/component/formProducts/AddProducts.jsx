@@ -5,6 +5,8 @@ import Form from "react-bootstrap/Form";
 
 function AddProducts() {
   const [product, setProduct] = useState({});
+  const [data, setData] = useState([]);
+  const { id, setId } = useState([]);
 
   const dataForm = (e) => {
     e.preventDefault();
@@ -17,21 +19,15 @@ function AddProducts() {
       stock: e.target.stock.value,
     });
     console.log(product);
+    fetch("http://localhost:8080/api/products", {
+      method: "post",
+      body: JSON.stringify(product),
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   };
 
-  if (product) {
-    useEffect(() => {
-      fetch("http://localhost:8080/api/products", {
-        method: "post",
-        body: JSON.stringify(product),
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-      })
-        .then((response) => {
-          response.json();
-        })
-        .then((data) => console.log(data));
-    }, []);
-  }
   return (
     <Form className="container mt-4" method="post" onSubmit={dataForm}>
       <Form.Group className="mb-3" controlId="nombre">

@@ -12,7 +12,9 @@ const middlewareLogin = (req, res, next) => {
   fs.promises.readFile("products.txt", "utf-8").then((response) => {
     const data = JSON.parse(response);
     products.push(...data);
-    id = products.length;
+    products.forEach((el) => {
+      id = el.id;
+    });
   });
 })();
 
@@ -30,11 +32,15 @@ productsRouter.get("/:id?", (req, res) => {
 // agrego productos dependiendo usuario admin
 productsRouter.post("/", middlewareLogin, (req, res) => {
   const product = req.body;
-  id = id++;
-  const timestamp = Date();
-  products.push({ id: id, timestamp: timestamp, ...product });
-  fs.promises.writeFile("products.txt", JSON.stringify(products));
-  res.json({ mensaje: "producto agregado correctamente" });
+  try {
+    id++;
+    const timestamp = Date();
+    products.push({ id: id, timestamp: timestamp, ...product });
+    fs.promises.writeFile("products.txt", JSON.stringify(products));
+    res.json({ mensaje: "producto agregado correctamente", id: id });
+  } catch (error) {
+    console.log("Error:", error);
+  }
 });
 
 // Modifico productos por id solo usuario admin
