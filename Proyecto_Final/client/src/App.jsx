@@ -6,6 +6,7 @@ import ListProducts from "./component/listProducts/ListProducts";
 import AddProducts from "./component/formProducts/AddProducts";
 import { LoginProvider } from "./context/LoginContext";
 import Chat from "./component/chat/Chat";
+import Search from "./component/search/Search";
 function App() {
   return (
     <BrowserRouter>

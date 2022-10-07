@@ -1,68 +1,77 @@
-const { Router } = require("express");
-const fs = require("fs");
+import { Router } from "express";
+import fs from "fs";
+import "../db/dbProducts.js";
+import { db } from "../db/dbProducts.js";
+import Product from "../products.js";
+
 const productsRouter = Router();
+const newProducts = new Product();
 let products = [];
-let id = 0;
+
 const login = true;
+
 const middlewareLogin = (req, res, next) => {
-  login ? next() : res.send("No tiene permiso");
+  login ? next() : res.json({ mensaje: "No tiene permiso" });
 };
 
-(() => {
-  fs.promises.readFile("products.txt", "utf-8").then((response) => {
-    const data = JSON.parse(response);
-    products.push(...data);
-    products.forEach((el) => {
-      id = el.id;
-    });
-  });
-})();
-
 // muestro los productos completos o no dependiendo de un ID
-productsRouter.get("/:id?", (req, res) => {
+productsRouter.get("/:id?", async (req, res) => {
   const { id } = req.params;
-  if (id) {
-    const info = products.find((el) => el.id === Number(id));
-    res.json(info);
-  } else {
-    res.json(products);
+  try {
+    if (!id) {
+      const bdproduct = await newProducts.getProducts();
+      res.json(bdproduct);
+    } else {
+      const product = await newProducts.getProductById(Number(id));
+      res.json(product);
+    }
+  } catch (error) {
+    console.log("Error:", error);
   }
 });
 
 // agrego productos dependiendo usuario admin
-productsRouter.post("/", middlewareLogin, (req, res) => {
-  const product = req.body;
+
+productsRouter.post("/", middlewareLogin, async (req, res) => {
+  const { name, description, code, picture, price, stock } = req.body;
   try {
-    id++;
-    const timestamp = Date();
-    products.push({ id: id, timestamp: timestamp, ...product });
-    fs.promises.writeFile("products.txt", JSON.stringify(products));
-    res.json({ mensaje: "producto agregado correctamente", id: id });
+    const createProduct = await newProducts.setProduct(
+      name,
+      description,
+      code,
+      picture,
+      price,
+      stock
+    );
+
+    res.json({ mensaje: "producto creado con exito", product: createProduct });
   } catch (error) {
     console.log("Error:", error);
   }
 });
 
 // Modifico productos por id solo usuario admin
-productsRouter.put("/:id", middlewareLogin, (req, res) => {
-  const { title, price, thumbnail } = req.body;
+productsRouter.put("/:id", middlewareLogin, async (req, res) => {
+  const data = req.body;
   const { id } = req.params;
-  const data = products.find((el) => el.id === Number(id));
-  data.title = title;
-  data.price = price;
-  data.thumbnail = thumbnail;
-  fs.promises.writeFile("products.txt", JSON.stringify(products));
-  res.json({ mensaje: "producto modificado correctamente" });
+  try {
+    const info = await newProducts.updateProduct(Number(id), data);
+    res.json({ mensaje: "producto modificado correctamente", product: info });
+  } catch (error) {
+    console.log("Error:", error);
+  }
 });
 
 // Elimino productos por ID solo admin
 
-productsRouter.delete("/:id", middlewareLogin, (req, res) => {
+productsRouter.delete("/:id", middlewareLogin, async (req, res) => {
   const { id } = req.params;
-  const index = products.findIndex((el) => el.id === Number(id));
-  products.splice(index, 1);
-  fs.promises.writeFile("products.txt", JSON.stringify(products));
-  res.json({ mensaje: "Se borro correctamente" });
+  try {
+    const data = await newProducts.deteleProduct(Number(id));
+    res.json({ mensaje: "Se borro correctamente", product: data });
+  } catch (error) {
+    console.log("Error:", error);
+  }
 });
 
-module.exports = productsRouter;
+export default productsRouter;

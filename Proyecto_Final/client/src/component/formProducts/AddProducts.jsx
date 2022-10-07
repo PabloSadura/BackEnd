@@ -1,32 +1,36 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 function AddProducts() {
   const [product, setProduct] = useState({});
   const [data, setData] = useState([]);
-  const { id, setId } = useState([]);
-
+  const [info, setInfo] = useState([]);
   const dataForm = (e) => {
     e.preventDefault();
-    setProduct({
+    const infoProdu = {
       nombre: e.target.nombre.value,
       descripcion: e.target.descripcion.value,
       codigo: e.target.codigo.value,
       foto: e.target.foto.value,
       precio: e.target.precio.value,
       stock: e.target.stock.value,
-    });
-    console.log(product);
-    fetch("http://localhost:8080/api/products", {
-      method: "post",
-      body: JSON.stringify(product),
-      headers: { "Content-type": "application/json; charset=UTF-8" },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    };
+    setInfo([...info, infoProdu]);
   };
+  useEffect(() => {
+    if (info.length) {
+      setProduct(info);
+      fetch("http://localhost:8080/api/products", {
+        method: "post",
+        body: JSON.stringify(product),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+    }
+  }, [info]);
 
   return (
     <Form className="container mt-4" method="post" onSubmit={dataForm}>
@@ -63,7 +67,7 @@ function AddProducts() {
         <Form.Control type="number" placeholder="Stock" name="stock" />
       </Form.Group>
       <Button variant="primary" type="submit">
-        Cagar
+        Cargar
       </Button>
     </Form>
   );

@@ -1,5 +1,5 @@
-const { Router } = require("express");
-const fs = require("fs");
+import { Router } from "express";
+import fs from "fs";
 const cartRouter = Router();
 
 let products = [];
@@ -82,4 +82,4 @@ cartRouter.delete("/:idCart/:id_prod/products", (req, res) => {
     console.log("Error: ", error);
   }
 });
-module.exports = cartRouter;
+export default cartRouter;

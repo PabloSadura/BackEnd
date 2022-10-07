@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import CardProduct from "../cartProducts/cartProducts";
-function ListProducts() {
+function ListProducts({ id }) {
   const [data, setData] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:8080/api/products", {
@@ -15,11 +16,25 @@ function ListProducts() {
   }, []);
 
   return (
-    <Container className="d-flex justify-content-evenly mt-4 flex-wrap">
-      {data.map((el) => (
-        <CardProduct key={el.id} products={el} />
-      ))}
-    </Container>
+    <>
+      <div className="text-end mt-4">
+        <form method="get">
+          <input
+            type="text"
+            name="busqueda"
+            id="busqueda"
+            placeholder="Buscar..."
+            className="rounded p-1"
+          />
+          <input type="submit" value="Buscar" className="mx-3 rounded" />
+        </form>
+      </div>
+      <Container className="d-flex justify-content-evenly mt-4 flex-wrap">
+        {data.map((el) => (
+          <CardProduct key={el.id} products={el} />
+        ))}
+      </Container>
+    </>
   );
 }
 
