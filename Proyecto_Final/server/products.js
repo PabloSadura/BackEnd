@@ -1,5 +1,6 @@
 import "./db/dbProducts.js";
 import { db } from "./db/dbProducts.js";
+
 export default class Product {
   constructor() {
     this.name = "";

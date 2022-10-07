@@ -1,12 +1,10 @@
 import { Router } from "express";
-import fs from "fs";
 import "../db/dbProducts.js";
-import { db } from "../db/dbProducts.js";
+import "../db/dbChat.js";
 import Product from "../products.js";
 
 const productsRouter = Router();
 const newProducts = new Product();
-let products = [];
 
 const login = true;
 
