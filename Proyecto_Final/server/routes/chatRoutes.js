@@ -20,7 +20,7 @@ chatRouter.post("/", async (req, res) => {
   try {
     const msj = req.body;
     const data = await chat.setMessage(msj);
-    resjson(data);
+    res.json(data);
   } catch (error) {
     console.log("Error:", error);
   }
