@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import CardProduct from "../cartProducts/cartProducts";
-function ListProducts({ id }) {
+import CardProduct from "../cardProducts/cardProducts";
+function ListProducts() {
   const [data, setData] = useState([]);
   const [busqueda, setBusqueda] = useState("");
 
