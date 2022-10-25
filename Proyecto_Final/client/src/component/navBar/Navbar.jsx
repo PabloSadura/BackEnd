@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
 
 function NavbarHeader() {
   const { login, setLogin } = useContext(LoginContext);
@@ -39,6 +40,9 @@ function NavbarHeader() {
             </Form.Group>
           </Nav>
         </Navbar.Collapse>
+        <Link to="/cart" className="me-4">
+          Cart
+        </Link>
       </Container>
     </Navbar>
   );
