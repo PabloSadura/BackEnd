@@ -1,21 +1,24 @@
 import { productModel } from "../db/models/productMongo.js";
 export default class ContenedorProduct {
-  constructor(ruta) {
-    this.ruta = ruta;
+  constructor(collection) {
+    this.collection = collection;
   }
-  async listById(id) {
-    const product = await productModel.findById(id);
-    return product;
-  }
-  async listaAll() {
-    const product = await productModel.find({});
-    return product;
-  }
-  async addProduct(product) {
-    const isOk = await new productModel(product).save();
-    return isOk;
-  }
-  //   async deleteProduct(id) {
 
-  //   }
+  async getAll() {
+    return this.collection.find();
+  }
+
+  async getById(id) {
+    return this.collection.findById(id);
+  }
+  async create(obj) {
+    return await new this.collection(obj).save();
+  }
+
+  async update(id, obj) {
+    return await this.collection.updateOne({ _id: id }, { $set: obj });
+  }
+  async delete(id) {
+    return await this.collection.deleteOne({ _id: id });
+  }
 }

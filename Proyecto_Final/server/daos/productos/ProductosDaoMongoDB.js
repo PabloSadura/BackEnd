@@ -1,7 +1,8 @@
 import ContenedorProduct from "../../containers/productsMongo.js";
+import { productModel } from "../../db/models/productMongo.js";
 
-class ProductDaoMongoDB extends ContenedorProduct {
+export default class ProductDaoMongoDB extends ContenedorProduct {
   constructor() {
-    super();
+    super(productModel);
   }
 }
