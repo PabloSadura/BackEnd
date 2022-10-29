@@ -1,4 +1,4 @@
-import { dbChat } from "./db/dbChat.js";
+import { dbChat } from "../db/dbChat.js";
 
 export default class Chat {
   constructor() {

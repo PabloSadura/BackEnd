@@ -1,5 +1,5 @@
-import "./db/dbProducts.js";
-import { db } from "./db/dbProducts.js";
+import "../db/dbProducts.js";
+import { db } from "../db/dbProducts.js";
 
 export default class Product {
   constructor() {

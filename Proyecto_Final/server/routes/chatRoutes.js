@@ -1,5 +1,5 @@
-import Chat from "../chatClass.js";
-import { json, Router } from "express";
+import Chat from "../containers/chatClass.js";
+import { Router } from "express";
 const chatRouter = Router();
 const chat = new Chat();
 

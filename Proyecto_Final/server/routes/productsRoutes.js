@@ -1,7 +1,7 @@
 import { Router } from "express";
 import "../db/dbProducts.js";
 import "../db/dbChat.js";
-import Product from "../products.js";
+import Product from "../containers/products.js";
 
 const productsRouter = Router();
 const newProducts = new Product();
