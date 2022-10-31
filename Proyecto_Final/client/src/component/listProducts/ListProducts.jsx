@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import CardProduct from "../cardProducts/cardProducts";
+import axios from "axios";
 function ListProducts() {
   const [data, setData] = useState([]);
   const [busqueda, setBusqueda] = useState("");
 
+  const URL = "http://localhost:8080/api/products";
+
   useEffect(() => {
-    fetch("http://localhost:8080/api/products", {
+    fetch(URL, {
       method: "GET",
-      headers: { "Content-type": "application/json;charset=UTF-8" },
-    })
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((err) => console.log("Error:", err));
-  }, []);
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => console.log(response));
+  }, [1]);
 
   return (
     <>
