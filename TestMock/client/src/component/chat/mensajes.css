@@ -1,0 +1,8 @@
+.bundler {
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 8px;
+  margin-bottom: 8px;
+  background: rgb(217, 238, 208);
+  border-radius: 5px;
+}

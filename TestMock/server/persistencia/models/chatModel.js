@@ -6,6 +6,10 @@ const chatSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    fecha: {
+      type: String,
+      required: true,
+    },
     nombre: {
       type: String,
       required: false,

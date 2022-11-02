@@ -19,4 +19,10 @@ chatRoutes.post("/", async (req, res) => {
   res.json({ response: "Mensaje guardado con exito", chat: respuesta });
 });
 
+chatRoutes.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  const response = await chatMongoDao.delete(id);
+  res.json("Se elimino correctamente");
+});
+
 export default chatRoutes;

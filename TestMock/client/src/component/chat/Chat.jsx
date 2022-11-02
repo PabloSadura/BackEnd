@@ -5,43 +5,44 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
 import axios from "axios";
-import MensajesChat from "./mensajesChat";
+import MensajesChat from "./MensajesChat";
 function Chat() {
   const [chat, setChat] = useState([]);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const URL = "http://localhost/8080/chat";
+  const URL = "http://localhost:8080/chat";
 
   async function getChat() {
     const chatdb = await axios.get(URL);
-    const response = chatdb.data;
-    return response;
+    const { data } = chatdb;
+    setChat(data);
   }
   async function createChat(obj) {
     const chatdb = await axios.post(URL, obj);
-    const response = chatdb.data;
-    return response;
+    if (chat.length !== 0) {
+      setChat(obj);
+    } else {
+      setChat([...chat, obj]);
+    }
   }
 
   useEffect(() => {
-    const data = getChat();
-    if (data.lenght) {
-      setChat(data);
-    }
-  }, []);
+    getChat();
+  }, [chat]);
 
   const message = (e) => {
     e.preventDefault();
-    createChat({
-      author: { id: e.target.email.value },
+    const mensajes = {
+      author: { id: e.target.email.value, fecha: new Date() },
       text: e.target.mensaje.value,
-    });
+    };
+    createChat(mensajes);
     e.target.email.value = "";
     e.target.mensaje.value = "";
-    console.log(chat);
   };
+
   return (
     <>
       <Button
@@ -60,9 +61,11 @@ function Chat() {
           <Offcanvas.Title>Chat</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body style={{ height: "60%" }}>
-          {chat.map((el) => (
-            <MensajesChat key={el.fecha} mensaje={el} />
-          ))}
+          {chat.length ? (
+            chat.map((el) => <MensajesChat key={el._id} mensaje={el} />)
+          ) : (
+            <h3>No hay mensajes</h3>
+          )}
         </Offcanvas.Body>
         <Offcanvas.Body>
           <Form onSubmit={message}>
