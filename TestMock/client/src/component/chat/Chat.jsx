@@ -6,18 +6,34 @@ import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
 import axios from "axios";
 import MensajesChat from "./MensajesChat";
+import { denormalize, schema } from "normalizr";
 function Chat() {
   const [chat, setChat] = useState([]);
+  const [message, setMessage] = useState([]);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const URL = "http://localhost:8080/chat";
 
+  const authorEntity = new schema.Entity("author");
+  const textEntity = new schema.Entity("text", {
+    author: authorEntity,
+  });
+  const messageEntity = new schema.Entity("message", {
+    post: [textEntity],
+  });
+
   async function getChat() {
     const chatdb = await axios.get(URL);
     const { data } = chatdb;
-    setChat(data);
+    const deNormalize = await denormalize(
+      data.result,
+      messageEntity,
+      data.entities
+    );
+    const { post } = deNormalize;
+    setChat(post);
   }
   async function createChat(obj) {
     const chatdb = await axios.post(URL, obj);
@@ -27,17 +43,17 @@ function Chat() {
       setChat([...chat, obj]);
     }
   }
-
   useEffect(() => {
     getChat();
-  }, [chat]);
+  }, [message]);
 
-  const message = (e) => {
+  const messageChat = (e) => {
     e.preventDefault();
     const mensajes = {
       author: { id: e.target.email.value, fecha: new Date() },
       text: e.target.mensaje.value,
     };
+    setMessage(mensajes);
     createChat(mensajes);
     e.target.email.value = "";
     e.target.mensaje.value = "";
@@ -62,13 +78,15 @@ function Chat() {
         </Offcanvas.Header>
         <Offcanvas.Body style={{ height: "60%" }}>
           {chat.length ? (
-            chat.map((el) => <MensajesChat key={el._id} mensaje={el} />)
+            chat.map((el) => (
+              <MensajesChat key={el._doc.author._id} mensaje={el._doc} />
+            ))
           ) : (
             <h3>No hay mensajes</h3>
           )}
         </Offcanvas.Body>
         <Offcanvas.Body>
-          <Form onSubmit={message}>
+          <Form onSubmit={messageChat}>
             <FloatingLabel
               controlId="floatingInput"
               label="Email address"
