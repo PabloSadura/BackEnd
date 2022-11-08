@@ -1,15 +1,17 @@
 import { Router } from "express";
+
 import ChatMongoDAO from "../persistencia/daos/chatMongoDAO.js";
 
 const chatRoutes = Router();
 const chatMongoDao = new ChatMongoDAO();
 
 chatRoutes.get("/", async (req, res) => {
-  const chat = await chatMongoDao.getAll();
-  if (chat.length !== 0) {
-    res.json(chat);
+  const chat = await chatMongoDao.normalizeChat();
+  console.log(chat);
+  if (chat) {
+    res.status(200).json(chat);
   } else {
-    res.json({ response: "No hay mensajes" });
+    res.status(200).json({ message: "No existen chats" });
   }
 });
 
