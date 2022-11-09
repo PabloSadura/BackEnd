@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { LoginContext } from "../../context/LoginContext";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
@@ -9,8 +8,8 @@ import { Link } from "react-router-dom";
 function NavbarHeader() {
   const { login, setLogin } = useContext(LoginContext);
 
-  const validData = (e) => {
-    e.target.checked ? setLogin(true) : setLogin(false);
+  const loginOut = () => {
+    setLogin("");
   };
 
   return (
@@ -29,20 +28,26 @@ function NavbarHeader() {
             ) : (
               <></>
             )}
-            <Form.Group className="mt-2 ms-2" controlId="checked">
-              <Form.Check
-                type="checkbox"
-                label="Login"
-                onClick={(e) => {
-                  validData(e);
-                }}
-              />
-            </Form.Group>
           </Nav>
+          <Link to="/cart" className="me-4">
+            Cart
+          </Link>
+          {login ? (
+            <>
+              <p className="me-2 my-2">Bienvenido {login}</p>
+              <i
+                class="bi bi-power"
+                role="button"
+                tabindex="0"
+                onClick={loginOut}
+              ></i>
+            </>
+          ) : (
+            <Link to="/login" className="me-4">
+              LOGIN
+            </Link>
+          )}
         </Navbar.Collapse>
-        <Link to="/cart" className="me-4">
-          Cart
-        </Link>
       </Container>
     </Navbar>
   );

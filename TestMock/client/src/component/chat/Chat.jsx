@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import MensajesChat from "./MensajesChat";
 import { denormalize, schema } from "normalizr";
+
 function Chat() {
   const [chat, setChat] = useState([]);
   const [message, setMessage] = useState([]);

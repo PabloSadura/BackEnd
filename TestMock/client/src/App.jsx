@@ -4,6 +4,7 @@ import ListProducts from "./component/listProducts/ListProducts";
 import AddProducts from "./component/formProducts/AddProducts";
 import { LoginProvider } from "./context/LoginContext";
 import Chat from "./component/chat/Chat";
+import FormLogin from "./component/formLogin/formLogin";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<ListProducts />} />
             <Route path="/agregarProducts" element={<AddProducts />} />
+            <Route path="/login" element={<FormLogin />} />
           </Routes>
           <Chat />
         </div>
