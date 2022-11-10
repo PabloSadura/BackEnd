@@ -1,4 +1,5 @@
 import express from "express";
+import loginRouter from "./routes/loginRoutes.js";
 import productRoutes from "./routes/productsRoutes.js";
 import dbConnect from "./persistencia/dbConfig.js";
 import chatRoutes from "./routes/chatRoutes.js";
@@ -12,6 +13,7 @@ app.use(cors());
 
 app.use("/products", productRoutes);
 app.use("/chat", chatRoutes);
+app.use("/login", loginRouter);
 const PORT = process.env.PORT || 8080;
 
 try {

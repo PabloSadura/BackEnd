@@ -4,12 +4,24 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
 
 function NavbarHeader() {
-  const { login, setLogin } = useContext(LoginContext);
+  const { login, setLogin, user } = useContext(LoginContext);
 
+  const URL = "http://localhost:8080/login";
+
+  async function getLogin() {
+    const userConnect = await axios.get(URL);
+    console.log(userConnect);
+  }
+
+  useEffect(() => {
+    getLogin();
+  });
   const loginOut = () => {
-    setLogin("");
+    setLogin();
   };
 
   return (
@@ -34,13 +46,10 @@ function NavbarHeader() {
           </Link>
           {login ? (
             <>
-              <p className="me-2 my-2">Bienvenido {login}</p>
-              <i
-                class="bi bi-power"
-                role="button"
-                tabindex="0"
-                onClick={loginOut}
-              ></i>
+              <p className="me-2 my-2">Bienvenido {user.name}</p>
+              <button type="button" className="btn" onClick={loginOut}>
+                <i className="bi bi-power"></i>
+              </button>
             </>
           ) : (
             <Link to="/login" className="me-4">

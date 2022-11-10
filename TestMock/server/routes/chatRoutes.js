@@ -7,7 +7,6 @@ const chatMongoDao = new ChatMongoDAO();
 
 chatRoutes.get("/", async (req, res) => {
   const chat = await chatMongoDao.normalizeChat();
-  console.log(chat);
   if (chat) {
     res.status(200).json(chat);
   } else {
