@@ -1,54 +1,52 @@
 import React from "react";
 import { useState } from "react";
 import { useContext } from "react";
-import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../context/LoginContext";
 
 function formLogin() {
   const navigate = useNavigate();
-  const { login, setLogin, loginIn } = useContext(LoginContext);
-  const { user, setUser } = useState([]);
+  const { user, setUser, loginIn } = useContext(LoginContext);
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
-  const redirect = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const obj = {
-      name: e.target.name.value,
-      password: e.target.password.value,
-    };
-    loginIn(obj);
-    navigate("/");
+    try {
+      const dataUser = await loginIn({ username, password });
+      setUser(dataUser.username);
+      localStorage.setItem("username", dataUser.username);
+      setUserName("");
+      setPassword("");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <div className="d-flex justify-content-center">
-      <Form
-        className="m-4 p-4 border justify rounded shadow"
-        style={{ width: "50vw" }}
-        method="post"
-        onSubmit={redirect}
-      >
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Nombre</Form.Label>
-          <Form.Control
+    <div className="d-flex justify-content-center mt-4">
+      <form onSubmit={handleLogin} className="border p-3 rounded shadow">
+        <div className="mb-2 border">
+          <input
             type="text"
-            name="name"
-            placeholder="Ingresar tu Nombre"
+            value={username}
+            name="username"
+            placeholder="Nombre de usuario"
+            onChange={({ target }) => setUserName(target.value)}
           />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Contraseña</Form.Label>
-          <Form.Control
+        </div>
+        <div className="mb-2 border">
+          <input
             type="password"
+            value={password}
             name="password"
             placeholder="Contraseña"
+            onChange={({ target }) => setPassword(target.value)}
           />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Iniciar
-        </Button>
-      </Form>
+        </div>
+        <button className="btn btn-primary ">Login</button>
+      </form>
     </div>
   );
 }

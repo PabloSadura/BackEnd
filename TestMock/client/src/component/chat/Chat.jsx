@@ -17,6 +17,7 @@ function Chat() {
 
   const URL = "http://localhost:8080/chat";
 
+  //NORMALIZE
   const authorEntity = new schema.Entity("author");
   const textEntity = new schema.Entity("text", {
     author: authorEntity,
@@ -25,6 +26,7 @@ function Chat() {
     post: [textEntity],
   });
 
+  //OBTENGO LOS CHATS GUARDADOS EN LA BD
   async function getChat() {
     const chatdb = await axios.get(URL);
     const { data } = chatdb;
@@ -36,18 +38,13 @@ function Chat() {
     const { post } = deNormalize;
     setChat(post);
   }
-  async function createChat(obj) {
-    const chatdb = await axios.post(URL, obj);
-    if (chat.length !== 0) {
-      setChat(obj);
-    } else {
-      setChat([...chat, obj]);
-    }
-  }
+
+  //RENDERIZO CUANDO SE AGREGA UN NUEVO CHAT
   useEffect(() => {
     getChat();
-  }, [message]);
+  }, [chat]);
 
+  //CREO UN NUEVO CHAT
   const messageChat = (e) => {
     e.preventDefault();
     const mensajes = {
@@ -59,6 +56,17 @@ function Chat() {
     e.target.email.value = "";
     e.target.mensaje.value = "";
   };
+
+  //GUARDO UN NUEVO CHAT EN LA BD
+
+  async function createChat(obj) {
+    const chatdb = await axios.post(URL, obj);
+    if (chat.length !== 0) {
+      setChat(obj);
+    } else {
+      setChat([...chat, obj]);
+    }
+  }
 
   return (
     <>
@@ -80,7 +88,7 @@ function Chat() {
         <Offcanvas.Body style={{ height: "60%" }}>
           {chat.length ? (
             chat.map((el) => (
-              <MensajesChat key={el._doc.author._id} mensaje={el._doc} />
+              <MensajesChat key={el._doc._id} mensaje={el._doc} />
             ))
           ) : (
             <h3>No hay mensajes</h3>

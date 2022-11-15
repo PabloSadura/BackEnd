@@ -8,21 +8,7 @@ import axios from "axios";
 import { useEffect } from "react";
 
 function NavbarHeader() {
-  const { login, setLogin, user } = useContext(LoginContext);
-
-  const URL = "http://localhost:8080/login";
-
-  async function getLogin() {
-    const userConnect = await axios.get(URL);
-    console.log(userConnect);
-  }
-
-  useEffect(() => {
-    getLogin();
-  });
-  const loginOut = () => {
-    setLogin();
-  };
+  const { login, setLogin, user, logout } = useContext(LoginContext);
 
   return (
     <Navbar bg="light" expand="lg">
@@ -35,7 +21,7 @@ function NavbarHeader() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            {login ? (
+            {login && user ? (
               <Nav.Link href="/agregarProducts">Agregar Productos</Nav.Link>
             ) : (
               <></>
@@ -44,10 +30,10 @@ function NavbarHeader() {
           <Link to="/cart" className="me-4">
             Cart
           </Link>
-          {login ? (
+          {login && user ? (
             <>
-              <p className="me-2 my-2">Bienvenido {user.name}</p>
-              <button type="button" className="btn" onClick={loginOut}>
+              <p className="me-2 my-2">Bienvenido {user}</p>
+              <button type="button" className="btn" onClick={logout}>
                 <i className="bi bi-power"></i>
               </button>
             </>

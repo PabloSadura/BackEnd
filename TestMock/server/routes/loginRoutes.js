@@ -23,7 +23,7 @@ loginRouter.get("/", async (req, res) => {
   if (req.session.username === username) {
     res.json(req.session.username);
   } else {
-    req.session.username = username || "Invitado";
+    req.session.username = username || "";
     res.json(req.session.username);
   }
 });
