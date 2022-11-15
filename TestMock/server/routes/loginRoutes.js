@@ -19,22 +19,20 @@ loginRouter.use(
 );
 
 loginRouter.get("/", async (req, res) => {
-  const data = await loginMongo.getAll();
-  if (data.length) {
-    res.json({ data });
+  const { username } = req.query;
+  if (req.session.username === username) {
+    res.json(req.session.username);
   } else {
-    res.json({ message: "No hay usuarios conectados" });
+    req.session.username = username || "Invitado";
+    res.json(req.session.username);
   }
 });
 
-loginRouter.post("/", (req, res) => {
-  const { name } = req.body;
-
+loginRouter.post("/auth", (req, res) => {
   for (const key in req.body) {
     req.session[key] = req.body[key];
   }
-
-  res.json({ message: req.session });
+  res.json(req.session);
 });
 
 export default loginRouter;

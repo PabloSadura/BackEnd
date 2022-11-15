@@ -14,6 +14,7 @@ app.use(cors());
 app.use("/products", productRoutes);
 app.use("/chat", chatRoutes);
 app.use("/login", loginRouter);
+
 const PORT = process.env.PORT || 8080;
 
 try {
