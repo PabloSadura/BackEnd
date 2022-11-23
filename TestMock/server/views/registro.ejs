@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ('head')%>
+  <body>
+    <header><%- include ('navbar') %></header>
+    <main class="container">
+      <div class="row border m-4 p-4">
+          <h1 class="text-center">Registrarse</h1>
+          <form action="/registro" method="post" class=" d-flex flex-column p-4">
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="Ingresa tu usuario"
+              class="mb-3"
+            />
+      
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Ingresa tu email"
+              class="mb-3"
+            />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Ingresa tu password"
+              class="mb-3"
+            />
+            <button class="btn btn-secondary ">Registrarse</button>
+          </form>
+            <button class="btn btn-secondary" onclick="location.href='/auth'">Google</button>
+        
+              
+  </main>
+  </body>
+</html>

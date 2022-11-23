@@ -1,19 +1,45 @@
 import express from "express";
-import loginRouter from "./routes/loginRoutes.js";
 import productRoutes from "./routes/productsRoutes.js";
 import dbConnect from "./persistencia/dbConfig.js";
 import chatRoutes from "./routes/chatRoutes.js";
-import cors from "cors";
 
+import registerRouter from "./routes/registerRoutes.js";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+
+// LLAMADO A PASSPORT
+import passport from "passport";
+import "./passport/localpassport.js";
+import "./passport/googlePassport.js";
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 
-app.use("/products", productRoutes);
+app.set("views", "./views");
+app.set("view engine", "ejs");
+
+app.use(
+  session({
+    secret: "mongoKey",
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://ecommerce:coderhouse@cluster0.qrpyisw.mongodb.net/ecommerce?retryWrites=true&w=majority",
+    }),
+
+    cookie: { maxAge: 30000 },
+  })
+);
+
+app.use("/productos", productRoutes);
 app.use("/chat", chatRoutes);
-app.use("/login", loginRouter);
+app.use("/", registerRouter);
+
+// Inicializar passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 const PORT = process.env.PORT || 8080;
 
