@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth";
-import Usuarios from "../persistencia/models/registerModel.js";
+import { config } from "../config.js";
 
 const authUser = (request, accessToken, refreshToken, profile, done) => {
   return done(null, profile);
@@ -9,9 +9,9 @@ const authUser = (request, accessToken, refreshToken, profile, done) => {
 passport.use(
   new GoogleStrategy(
     {
-      consumerKey:
-        "528826669079-f233ebnr8hkveus2tf7kuciar6ed20uf.apps.googleusercontent.com",
-      consumerSecret: "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",
+      consumerKey: config.GOOGLE_KEY_ID,
+
+      consumerSecret: config.GOOGLE_SECRET_KEY,
       callBackURL: "http://localhost:8080/auth/google",
       passReqToCallBack: true,
     },
