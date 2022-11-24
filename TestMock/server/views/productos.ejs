@@ -3,6 +3,18 @@
   <%- include ('head')%>
   <body>
     <header><%- include ('navbar') %></header>
-    <h1>Productos</h1>
+    <h1 class="text-center mt-4">Productos</h1>
+    <div class="row text-center justify-content-center">
+      <% products.forEach((el)=>{%>
+      <div class="card me-2 mb-2" style="width: 18rem">
+        <img src="<%=el.img%>" class="card-img-top" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title"><%=el.name%></h5>
+          <h4>$ <%= el.price %></h4>
+          <a href="#" class="btn btn-primary">Comprar</a>
+        </div>
+      </div>
+      <%}); %>
+    </div>
   </body>
 </html>

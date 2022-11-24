@@ -1,18 +1,10 @@
 import mongoose from "mongoose";
 
 const registerSchema = new mongoose.Schema({
-  username: {
-    type: String,
-  },
-  password: {
-    type: String,
-  },
-  email: {
-    type: String,
-  },
-  googleId: {
-    type: String,
-  },
+  username: String,
+  password: String,
+  email: String,
+  googleId: String,
 });
 
-export default mongoose.model("register", registerSchema);
+export default mongoose.model("usuarios", registerSchema);

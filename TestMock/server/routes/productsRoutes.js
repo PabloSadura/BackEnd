@@ -4,17 +4,19 @@ import ProductsMongoDAO from "../persistencia/daos/productsMongoDao.js";
 const productRoutes = Router();
 const productsMongo = new ProductsMongoDAO();
 
+const username = "";
+
 productRoutes.get("/:id?", async (req, res) => {
   const { id } = req.params;
   if (id) {
     const products = await productsMongo.getById(id);
-    res.render("productos", { products });
+    res.render("productos", { products, username });
   } else {
     const products = await productsMongo.getAll();
     if (products.length !== 0) {
-      res.render("productos", { products });
+      res.render("productos", { products, username });
     } else {
-      res.render("productos", { products });
+      res.render("productos", { products, username });
     }
   }
 });

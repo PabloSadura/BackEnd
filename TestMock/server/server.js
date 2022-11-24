@@ -16,26 +16,27 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.set("views", "./views");
-app.set("view engine", "ejs");
-
 app.use(
   session({
-    secret: "mongoKey",
-    resave: true,
-    saveUninitialized: true,
+    secret: "keySession",
+    resave: false,
+    saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl:
         "mongodb+srv://ecommerce:coderhouse@cluster0.qrpyisw.mongodb.net/ecommerce?retryWrites=true&w=majority",
     }),
-
-    cookie: { maxAge: 30000 },
   })
 );
 
+// Rutas
 app.use("/productos", productRoutes);
 app.use("/chat", chatRoutes);
 app.use("/", registerRouter);
+
+// Motores de Plantilla
+
+app.set("views", "./views");
+app.set("view engine", "ejs");
 
 // Inicializar passport
 app.use(passport.initialize());
