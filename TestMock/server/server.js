@@ -2,7 +2,7 @@ import express from "express";
 import productRoutes from "./routes/productsRoutes.js";
 import dbConnect from "./persistencia/dbConfig.js";
 import chatRoutes from "./routes/chatRoutes.js";
-
+import { config } from "./config.js";
 import registerRouter from "./routes/registerRoutes.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -11,6 +11,7 @@ import MongoStore from "connect-mongo";
 import passport from "passport";
 import "./passport/localpassport.js";
 import "./passport/googlePassport.js";
+import infoRouter from "./routes/info.js";
 const app = express();
 
 app.use(express.json());
@@ -19,12 +20,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     secret: "keySession",
-    resave: false,
+    resave: true,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl:
-        "mongodb+srv://ecommerce:coderhouse@cluster0.qrpyisw.mongodb.net/ecommerce?retryWrites=true&w=majority",
+      mongoUrl: config.MONGO_URL,
     }),
+    cookie: {
+      maxAge: 60000,
+    },
+    rolling: true,
   })
 );
 
@@ -32,7 +36,7 @@ app.use(
 app.use("/productos", productRoutes);
 app.use("/chat", chatRoutes);
 app.use("/", registerRouter);
-
+app.use("/info", infoRouter);
 // Motores de Plantilla
 
 app.set("views", "./views");

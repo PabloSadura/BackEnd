@@ -12,20 +12,6 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <% if(username!== ''){ %>
-        <li>
-          <h5>Bienvenido <%= username %></h5>
-        </li>
-        <button
-          class="btn btn-secondary ms-2"
-          onclick="location.href='/logout'"
-        >
-          Logout
-        </button>
-        <% } %>
-      </ul>
-    </div>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown"></div>
   </div>
 </nav>
