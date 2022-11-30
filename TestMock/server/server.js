@@ -12,6 +12,7 @@ import passport from "passport";
 import "./passport/localpassport.js";
 import "./passport/googlePassport.js";
 import infoRouter from "./routes/info.js";
+import randomRouter from "./routes/randomsRoutes.js";
 const app = express();
 
 app.use(express.json());
@@ -37,6 +38,7 @@ app.use("/productos", productRoutes);
 app.use("/chat", chatRoutes);
 app.use("/", registerRouter);
 app.use("/info", infoRouter);
+app.use("/api/randoms", randomRouter);
 // Motores de Plantilla
 
 app.set("views", "./views");
