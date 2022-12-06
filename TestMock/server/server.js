@@ -6,6 +6,8 @@ import { config } from "./config.js";
 import registerRouter from "./routes/registerRoutes.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import cluster from "cluster";
+import os from "os";
 
 // LLAMADO A PASSPORT
 import passport from "passport";
@@ -48,14 +50,21 @@ app.set("view engine", "ejs");
 app.use(passport.initialize());
 app.use(passport.session());
 
-const PORT = process.env.PORT || 8080;
-
-try {
-  await dbConnect();
-  console.log("Conectado a Base de Datos");
-  app.listen(PORT, () => {
-    console.log(`Escuchando el servidor ${PORT}`);
-  });
-} catch (error) {
-  console.log(error);
+const PORT = config.PORT;
+// Clusters
+const numProcesadores = os.cpus().length;
+if (cluster.isPrimary) {
+  for (let i = 0; i < numProcesadores; i++) {
+    cluster.fork();
+  }
+} else {
+  try {
+    await dbConnect();
+    console.log("Conectado a Base de Datos");
+    app.listen(PORT, () => {
+      console.log(`Escuchando el servidor ${PORT}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
