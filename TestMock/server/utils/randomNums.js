@@ -2,7 +2,7 @@ function randomNums(cant) {
   let arrayNums = [];
 
   for (let i = 0; i < cant; i++) {
-    const randNum = Math.round(Math.random() * 10);
+    const randNum = Math.round(Math.random() * 10 );
     const findArray = arrayNums.find((element) => element.num == randNum);
 
     if (findArray != undefined) {

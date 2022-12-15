@@ -73,6 +73,9 @@ const loggerError = log4js.getLogger("error");
 const loggerWarm = log4js.getLogger("archivo");
 const PORT = config.PORT;
 
+
+// Servidor
+
 try {
   await dbConnect();
   console.log("Conectado a Base de Datos");
