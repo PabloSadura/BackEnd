@@ -6,8 +6,8 @@ import { config } from "./config.js";
 import registerRouter from "./routes/registerRoutes.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
-import cluster from "cluster";
-import os from "os";
+import compression from "compression";
+import log4js from "log4js";
 
 // LLAMADO A PASSPORT
 import passport from "passport";
@@ -39,8 +39,10 @@ app.use(
 app.use("/productos", productRoutes);
 app.use("/chat", chatRoutes);
 app.use("/", registerRouter);
-app.use("/info", infoRouter);
+app.use("info", infoRouter);
+app.use("/infozip", compression(), infoRouter);
 app.use("/api/randoms", randomRouter);
+
 // Motores de Plantilla
 
 app.set("views", "./views");
@@ -50,21 +52,35 @@ app.set("view engine", "ejs");
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Logger con log4js
+
+log4js.configure({
+  appenders: {
+    myConsole: { type: "console" },
+    myFile: { type: "file", filename: "warm.log" },
+    myFile2: { type: "file", filename: "error.log" },
+  },
+  categories: {
+    default: { appenders: ["myConsole"], level: "trace" },
+    consola: { appenders: ["myConsole"], level: "debug" },
+    archivo: { appenders: ["myFile"], level: "all" },
+    error: { appenders: ["myFile2"], level: "error" },
+  },
+});
+
+const loggerInfo = log4js.getLogger();
+const loggerError = log4js.getLogger("error");
+const loggerWarm = log4js.getLogger("archivo");
 const PORT = config.PORT;
-// Clusters
-const numProcesadores = os.cpus().length;
-if (cluster.isPrimary) {
-  for (let i = 0; i < numProcesadores; i++) {
-    cluster.fork();
-  }
-} else {
-  try {
-    await dbConnect();
-    console.log("Conectado a Base de Datos");
-    app.listen(PORT, () => {
-      console.log(`Escuchando el servidor ${PORT}`);
-    });
-  } catch (error) {
-    console.log(error);
-  }
+
+try {
+  await dbConnect();
+  console.log("Conectado a Base de Datos");
+  app.listen(PORT, () => {
+    console.log(`Escuchando el servidor ${PORT}`);
+    loggerInfo.info("Info de logs");
+    loggerWarm.warn("Algo esta fallando");
+  });
+} catch (error) {
+  loggerError.error(error);
 }
