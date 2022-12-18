@@ -15,6 +15,7 @@ import "./passport/localpassport.js";
 import "./passport/googlePassport.js";
 import infoRouter from "./routes/info.js";
 import randomRouter from "./routes/randomsRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 const app = express();
 
 app.use(express.json());
@@ -42,6 +43,9 @@ app.use("/", registerRouter);
 app.use("info", infoRouter);
 app.use("/infozip", compression(), infoRouter);
 app.use("/api/randoms", randomRouter);
+app.use("/newUser", userRoutes);
+app.use("/auth-bloq", userRoutes);
+app.use("/auth-nobloq", userRoutes);
 
 // Motores de Plantilla
 
@@ -72,7 +76,6 @@ const loggerInfo = log4js.getLogger();
 const loggerError = log4js.getLogger("error");
 const loggerWarm = log4js.getLogger("archivo");
 const PORT = config.PORT;
-
 
 // Servidor
 
