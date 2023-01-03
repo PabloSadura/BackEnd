@@ -1,41 +1,41 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import session from "express-session";
-import passport from "passport";
 import MongoStore from "connect-mongo";
-import cors from "cors";
+import userRouter from "./routes/userRoutes.js";
+import "./persistencia/dbConfig.js";
+
+// passport
+import passport from "passport";
+import "./passport/localpassport.js";
+
 const app = express();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-const PORT = process.env.PORT || 8081;
-
 app.use(
   session({
-    secret: "keySession",
-    resave: true,
     saveUninitialized: false,
+    resave: false,
+    secret: "secretKey",
     store: MongoStore.create({
       mongoUrl:
         "mongodb+srv://ecommerce:coderhouse@cluster0.qrpyisw.mongodb.net/ecommerce?retryWrites=true&w=majority",
     }),
-    cookie: {
-      maxAge: 60000,
-    },
-    rolling: true,
   })
 );
 
+// inicializar passport
 app.use(passport.initialize());
 app.use(passport.session());
+// routes
 
-app.use(
-  cors({
-    origin: "http://localhost:5173/",
-    methods: "GET, PUT, POST, DELETE",
-    credentials: true,
-  })
-);
+app.use("/", userRouter);
 
+// motores de plantilla
+app.set("views", "./views");
+app.set("view engine", "ejs");
+
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Escuchando al puerto ${PORT}`);
 });
