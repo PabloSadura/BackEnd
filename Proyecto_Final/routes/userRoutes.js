@@ -3,7 +3,7 @@ import passport from "passport";
 
 const userRouter = Router();
 
-function isAuth(req, res, next) {
+export function isAuth(req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
@@ -38,10 +38,6 @@ userRouter.get("/errorRegistro", (req, res) => {
 });
 userRouter.get("/errorLogin", (req, res) => {
   res.render("errorLogin");
-});
-
-userRouter.get("/productos", isAuth, (req, res) => {
-  res.render("productos", { username: req.user.username });
 });
 
 userRouter.get("/logout", (req, res) => {

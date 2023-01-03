@@ -2,6 +2,7 @@ import express, { urlencoded } from "express";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import userRouter from "./routes/userRoutes.js";
+import productRoutes from "./routes/productsRoutes.js";
 import "./persistencia/dbConfig.js";
 
 // passport
@@ -30,6 +31,7 @@ app.use(passport.session());
 // routes
 
 app.use("/", userRouter);
+app.use("/productos", productRoutes);
 
 // motores de plantilla
 app.set("views", "./views");
