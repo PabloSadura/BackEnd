@@ -1,7 +1,8 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import Usuarios from "../persistencia/models/usuario.js";
-
+import { EmailRegistro } from "../persistencia/contenedores/emailClass.js";
+const emailRegistro = new EmailRegistro();
 passport.use(
   "registro",
   new LocalStrategy(
@@ -11,6 +12,7 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, username, password, done) => {
+      const { email } = req.body;
       const usuarioDB = await Usuarios.find({ username });
       if (usuarioDB.length > 0) {
         return done(null, false);
@@ -18,7 +20,8 @@ passport.use(
         const usuario = new Usuarios();
         (usuario.username = username),
           (usuario.password = password),
-          usuario.save();
+          emailRegistro.setEmail(username, email);
+        usuario.save();
         done(null, usuario);
       }
     }

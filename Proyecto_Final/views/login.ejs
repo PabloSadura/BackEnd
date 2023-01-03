@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
+  <%- include ('head')%>
   <body>
-    <h1>Login</h1>
-    <form action="/login" method="post">
-      <input
-        type="text"
-        name="username"
-        placeholder="Ingrese su nombre de Usuario"
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Ingresar su Contraseña"
-      />
-      <button>Enviar</button>
-    </form>
-    <h2>Registrarse</h2>
-    <button onclick="location.href='/registro'">Registrarse</button>
+    <header><%- include('./navbar') %></header>
+    <main class="container">
+      <div class="row border m-4 p-4">
+        <h1 class="text-center">Login</h1>
+        <form action="/login" method="post" class="d-flex flex-column p-4">
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Ingresa tu usuario"
+            class="mb-3"
+          />
+
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Ingresa tu password"
+            class="mb-3"
+          />
+          <button class="btn btn-secondary">Login</button>
+        </form>
+        <div class="m-4 p-4">
+          <h2>Nuevo Usuario?</h2>
+          <button onclick="location.href='/registro'" class="btn btn-secondary">
+            Registrarse
+          </button>
+        </div>
+      </div>
+    </main>
   </body>
 </html>
