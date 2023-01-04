@@ -3,6 +3,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import userRouter from "./routes/userRoutes.js";
 import productRoutes from "./routes/productsRoutes.js";
+import cartRouter from "./routes/cartRoutes.js";
 import "./persistencia/dbConfig.js";
 
 // passport
@@ -32,6 +33,7 @@ app.use(passport.session());
 
 app.use("/", userRouter);
 app.use("/productos", productRoutes);
+app.use("/cart", cartRouter);
 
 // motores de plantilla
 app.set("views", "./views");

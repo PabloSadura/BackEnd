@@ -7,14 +7,14 @@ export function isAuth(req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.render("login");
+    res.render("login", { username: "" });
   }
 }
 userRouter.get("/", isAuth, (req, res) => {
   res.redirect("/productos");
 });
 userRouter.get("/registro", (req, res) => {
-  res.render("registro");
+  res.render("registro", { username: "" });
 });
 
 userRouter.post(
@@ -34,10 +34,10 @@ userRouter.post(
 );
 
 userRouter.get("/errorRegistro", (req, res) => {
-  res.render("errorRegistro");
+  res.render("errorRegistro", { username: "" });
 });
 userRouter.get("/errorLogin", (req, res) => {
-  res.render("errorLogin");
+  res.render("errorLogin", { username: "" });
 });
 
 userRouter.get("/logout", (req, res) => {
