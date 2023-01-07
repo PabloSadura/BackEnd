@@ -8,7 +8,12 @@ const productMongo = new ProductsMongoDAO();
 
 cartRouter.get("/", async (req, res) => {
   const productCart = await cartMongo.getByUser(req.user.username);
-  res.render("cart", { username: req.user.username, productCart });
+  const total = productCart.reduce((acc, el) => acc + el.price, 0);
+  res.render("cart", {
+    username: req.user.username,
+    productCart,
+    total: total,
+  });
 });
 cartRouter.post("/", async (req, res) => {
   const { id, stock } = req.body;
@@ -28,15 +33,18 @@ cartRouter.post("/", async (req, res) => {
 cartRouter.get("/delete/:id", (req, res) => {
   const { id } = req.params;
   cartMongo.delete(id);
-  res.send("Se elimino correctamente");
-  //   res.render("cart", { username: req.user.username, productCart });
+  res.redirect("/cart");
 });
 
 cartRouter.put("/:id", (req, res) => {
   const { id } = req.params;
   const body = req.body;
   cartMongo.update(id, body);
-  res.render("cart", { username: req.user.username, productCart });
+  res.render("cart", { username: req.user.username });
+});
+cartRouter.get("/ordenGenerada", (req, res) => {
+  cartMongo.deleteAllCart(req.user.username);
+  res.render("ordenGenerada", { username: req.user.username });
 });
 
 export default cartRouter;

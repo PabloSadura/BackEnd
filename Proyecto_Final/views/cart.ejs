@@ -5,7 +5,7 @@
     <%- include('navbar')%>
     <main class="row">
       <% if(productCart.length !== 0 ){%>
-      <section class="d-flex mt-3 mb-3 p-4">
+      <section class="d-md-flex mt-3 mb-3 p-4">
         <div class="col-12 col-md-6 p-4 border">
           <% productCart.forEach((el)=>{%>
           <table class="table border rounded shadow">
@@ -29,11 +29,19 @@
           </table>
           <% }); %>
         </div>
-        <div class="col-12 col-md-6 p-4 border">
+        <div class="col-md-6 p-4 border">
           <div class="d-flex flex-column">
             <h4 class="text-center">Proceso de pago</h4>
           </div>
-          <%-include ('mediosPago')%>
+          <%-include ('mediosPago')%> <%- include ('totalCompra')%>
+          <div class="d-flex justify-content-end">
+            <button
+              class="btn btn-success"
+              onclick="location.href='/cart/ordenGenerada'"
+            >
+              Pagar
+            </button>
+          </div>
         </div>
       </section>
       <%}else{%>

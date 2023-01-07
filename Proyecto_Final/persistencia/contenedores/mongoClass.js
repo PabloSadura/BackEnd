@@ -25,4 +25,7 @@ export class MongoClass {
   async getByUser(user) {
     return await this.collection.find({ id_username: user });
   }
+  async deleteAllCart(user) {
+    return await this.collection.deleteMany({ id_username: user });
+  }
 }
