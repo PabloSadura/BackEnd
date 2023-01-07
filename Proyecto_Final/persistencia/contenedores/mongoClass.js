@@ -6,7 +6,7 @@ export class MongoClass {
   }
 
   async getAll() {
-    return await this.collection.find({});
+    return await this.collection.find();
   }
 
   async getById(id) {
@@ -20,6 +20,9 @@ export class MongoClass {
     return await new this.collection.updateOne({ _id: id }, { $set: obj });
   }
   async delete(id) {
-    return await new this.collection.deleteOne({ _id: id });
+    return await this.collection.deleteOne({ _id: id });
+  }
+  async getByUser(user) {
+    return await this.collection.find({ id_username: user });
   }
 }
