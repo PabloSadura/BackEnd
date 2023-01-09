@@ -2,6 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import Usuarios from "../persistencia/models/usuario.js";
 import { EmailRegistro } from "../persistencia/contenedores/emailClass.js";
+import { loggerInfo } from "../logs.js";
 const emailRegistro = new EmailRegistro();
 passport.use(
   "registro",
@@ -12,7 +13,7 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, username, password, done) => {
-      const { email } = req.body;
+      const { email, name, age, phone, avatar } = req.body;
       const usuarioDB = await Usuarios.find({ username });
       if (usuarioDB.length > 0) {
         return done(null, false);
@@ -20,7 +21,12 @@ passport.use(
         const usuario = new Usuarios();
         (usuario.username = username),
           (usuario.password = password),
+          (usuario.name = name),
+          (usuario.age = age),
+          (usuario.phone = phone),
+          (usuario.avatar = avatar),
           emailRegistro.setEmail(username, email);
+        loggerInfo.info();
         usuario.save();
         done(null, usuario);
       }
@@ -41,6 +47,7 @@ passport.use(
       if (usuarioDB.length === 0) {
         return done(null, false);
       }
+      loggerInfo.info();
       done(null, usuarioDB);
     }
   )
