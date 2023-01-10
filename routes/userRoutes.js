@@ -1,42 +1,23 @@
 import { Router } from "express";
-import passport from "passport";
-import { isAuth } from "../controllers/userController.js";
+
+import {
+  errorLogin,
+  errorRegister,
+  isAuth,
+  login,
+  logout,
+  postLogin,
+  postRegister,
+  register,
+} from "../controllers/userController.js";
 const userRouter = Router();
 
-userRouter.get("/", isAuth, (req, res) => {
-  res.redirect("/productos");
-});
-userRouter.get("/registro", (req, res) => {
-  res.render("registro", { username: "" });
-});
-
-userRouter.post(
-  "/registro",
-  passport.authenticate("registro", {
-    failureRedirect: "/errorRegistro",
-    successRedirect: "/productos",
-  })
-);
-
-userRouter.post(
-  "/login",
-  passport.authenticate("login", {
-    failureRedirect: "/errorLogin",
-    successRedirect: "/productos",
-  })
-);
-
-userRouter.get("/errorRegistro", (req, res) => {
-  res.render("errorRegistro", { username: "" });
-});
-userRouter.get("/errorLogin", (req, res) => {
-  res.render("errorLogin", { username: "" });
-});
-
-userRouter.get("/logout", (req, res) => {
-  req.session.destroy(() => {
-    res.redirect("/");
-  });
-});
+userRouter.get("/", isAuth, login);
+userRouter.get("/registro", register);
+userRouter.post("/registro", postRegister);
+userRouter.post("/login", postLogin);
+userRouter.get("/errorRegistro", errorRegister);
+userRouter.get("/errorLogin", errorLogin);
+userRouter.get("/logout", logout);
 
 export default userRouter;

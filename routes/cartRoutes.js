@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { Email } from "../persistencia/contenedores/emailClass.js";
 import {
   deleteOneCart,
   getProducts,
@@ -8,8 +7,6 @@ import {
   putById,
 } from "../controllers/cartController.js";
 const cartRouter = Router();
-
-const emailCart = new Email();
 
 cartRouter.get("/", getProducts);
 cartRouter.post("/", postProducts);
