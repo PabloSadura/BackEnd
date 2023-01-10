@@ -5,6 +5,7 @@ import {
   deleteOneinCart,
   updateOne,
 } from "../services/cartServices.js";
+import { sendMail } from "../services/emailServices.js";
 import { getById } from "../services/productServices.js";
 
 export const getProducts = async (req, res) => {
@@ -47,7 +48,7 @@ export const deleteOneCart = async (req, res) => {
 
 export const order = async (req, res) => {
   const products = await cartUser(req.user.username);
-  emailCart.emailCart(req.user.username, req.user.email, products);
+  sendMail(req.user.username, req.user.email, products);
   deleteAllCart(req.user.username);
   res.render("ordenGenerada", { username: req.user.username });
 };
