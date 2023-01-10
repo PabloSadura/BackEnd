@@ -2,20 +2,14 @@ import { Router } from "express";
 import CartMongoDao from "../persistencia/daos/cartMongoDao.js";
 import ProductsMongoDAO from "../persistencia/daos/productsMongoDao.js";
 import { Email } from "../persistencia/contenedores/emailClass.js";
+import { getProducts } from "../controllers/cartController.js";
 const cartRouter = Router();
 const cartMongo = new CartMongoDao();
 const productMongo = new ProductsMongoDAO();
 const emailCart = new Email();
 
-cartRouter.get("/", async (req, res) => {
-  const productCart = await cartMongo.getByUser(req.user.username);
-  const total = productCart.reduce((acc, el) => acc + el.price, 0);
-  res.render("cart", {
-    username: req.user.username,
-    productCart,
-    total: total,
-  });
-});
+cartRouter.get("/", getProducts);
+
 cartRouter.post("/", async (req, res) => {
   const { id, stock } = req.body;
   const product = await productMongo.getById(id);

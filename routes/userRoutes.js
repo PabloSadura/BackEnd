@@ -1,15 +1,8 @@
 import { Router } from "express";
 import passport from "passport";
-
+import { isAuth } from "../controllers/userController.js";
 const userRouter = Router();
 
-export function isAuth(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.render("login", { username: "" });
-  }
-}
 userRouter.get("/", isAuth, (req, res) => {
   res.redirect("/productos");
 });
