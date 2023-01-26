@@ -9,7 +9,7 @@ export async function passportRegister() {
 
 export async function passportLogin() {
   passport.authenticate("login", {
-    failureRedirect: "/errorLogin",
-    successRedirect: "/productos",
+    failureMessage: false,
+    successMessage: true,
   });
 }

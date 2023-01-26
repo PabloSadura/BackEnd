@@ -1,18 +1,15 @@
-import ProductsMongoDAO from "../persistencia/daos/productsMongoDao.js";
-const productMongoDao = new ProductsMongoDAO();
+import dao from "../persistencia/daos/factory.js";
 
 export async function allProducts() {
-  return await productMongoDao.getAll();
+  return await dao.getAll();
 }
-
 export async function createProduct() {
-  return await productMongoDao.save(1);
+  return await dao.save(1);
 }
-
 export async function deleteProduct(id) {
-  return await productMongoDao.delete(id);
+  return await dao.delete(id);
 }
 
 export async function getById(id) {
-  return await productMongoDao.getById(id);
+  return await dao.getById(id);
 }
