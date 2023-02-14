@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ('head')%>
+  <body>
+    <%- include('navbar')%>
+    <main class="row">
+      <% if(productCart.length !== 0 ){%>
+      <section class="d-md-flex mt-3 mb-3 p-4">
+        <div class="col-12 col-md-6 p-4 border">
+          <% productCart.forEach((el)=>{%>
+          <table class="table border rounded shadow">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td><%- el.title %></td>
+              <td><%- el.count %></td>
+              <td><%- el.price %></td>
+              <td>
+                <a href="/cart/delete/<%- el._id%>"
+                  ><i class="bi bi-trash"></i
+                ></a>
+              </td>
+            </tbody>
+          </table>
+          <% }); %>
+        </div>
+        <div class="col-md-6 p-4 border">
+          <div class="d-flex flex-column">
+            <h4 class="text-center">Proceso de pago</h4>
+          </div>
+          <%-include ('mediosPago')%> <%- include ('totalCompra')%>
+          <div class="d-flex justify-content-end">
+            <button
+              class="btn btn-success"
+              onclick="location.href='/cart/ordenGenerada'"
+            >
+              Pagar
+            </button>
+          </div>
+        </div>
+      </section>
+      <%}else{%>
+      <h2 class="mt-4 text-center">No existen Productos en el carrito</h2>
+      <%}%>
+      <section class="text-center">
+        <button
+          onclick="location.href='products'"
+          class="btn btn-secondary mt-3 ms-3"
+        >
+          Seguir comprando
+        </button>
+      </section>
+    </main>
+  </body>
+</html>
