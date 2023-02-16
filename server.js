@@ -5,7 +5,7 @@ import { config } from "./config/config.js";
 import * as url from "url";
 
 // logs
-import { loggerInfo } from "./config/logs.js";
+import { loggerInfo, loggerUser } from "./config/logs.js";
 // Auth0
 import { auth } from "express-openid-connect";
 import { auth0 } from "./auth/auth.js";
@@ -68,6 +68,10 @@ const PORT = config.PORT;
 io.on("connection", (socket) => {
   console.log("Usuario conectado a socket");
   socket.emit("mensaje", "Hola como estan?");
+
+  socket.on("chatMessage", (msg) => {
+    io.emit("chatMessage", msg);
+  });
 });
 
 httpServer.listen(PORT, () => {
