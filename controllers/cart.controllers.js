@@ -46,8 +46,8 @@ export default class CartController {
 
   order = async (req, res) => {
     const products = await this.cartServices.cartUser(req.oidc.user.email);
-    sendMail(req.oidc.user.nickname, req.oidc.user.email, products);
-    this.cartServices.deleteAllCart(req.user.username);
+    // sendMail(req.oidc.user.nickname, req.oidc.user.email, products);
+    this.cartServices.deleteAllCart(req.oidc.email);
     res.render("ordenGenerada", { username: req.oidc.user.nickname });
   };
 }
