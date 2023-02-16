@@ -17,7 +17,7 @@ import CartRouter from "./routes/cart.routes.js";
 
 // Socket
 import { Server as HttpServer } from "http";
-import { Server as IOServer } from "socket.io";
+import socketIO from "./config/socket.js";
 
 // DB
 import "./config/dbConfig.js";
@@ -31,7 +31,7 @@ const cartRouter = new CartRouter();
 
 // Instanciando Socket.io
 const httpServer = new HttpServer(app);
-const io = new IOServer(httpServer);
+socketIO(httpServer);
 
 // Static
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
@@ -65,14 +65,6 @@ app.set("view engine", "ejs");
 // Conectado Socket
 
 const PORT = config.PORT;
-io.on("connection", (socket) => {
-  console.log("Usuario conectado a socket");
-  socket.emit("mensaje", "Hola como estan?");
-
-  socket.on("chatMessage", (msg) => {
-    io.emit("chatMessage", msg);
-  });
-});
 
 httpServer.listen(PORT, () => {
   console.log(`Escuchando al puerto ${PORT}`);
