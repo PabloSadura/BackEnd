@@ -4,8 +4,6 @@ import MongoStore from "connect-mongo";
 import { config } from "./config/config.js";
 import * as url from "url";
 
-// logs
-import { loggerInfo, loggerUser } from "./config/logs.js";
 // Auth0
 import { auth } from "express-openid-connect";
 import { auth0 } from "./auth/auth.js";

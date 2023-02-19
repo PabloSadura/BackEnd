@@ -14,33 +14,37 @@ export default class ProductsController {
     }
   };
   setOneProduct = async (req, res) => {
+    console.log(req.body);
     try {
       await this.productsService.setOneProduct(req.body);
-      res
-        .status(200)
-        .json({ message: "Producto agregado con exito", product: req.body });
+      res.status(200).reder("productos");
     } catch (error) {
       res.status(500).json({ message: error });
     }
   };
   getById = async (req, res) => {
     const { id } = req.params;
-    const product = await this.productsService.getById(Number(id));
+    const product = await this.productsService.getById(id);
     res.json({ product });
   };
   deleteOneProduct = async (req, res) => {
     const { id } = req.params;
-    const product = await this.productsService.deleteById(id);
-    res.json({ message: "Se elimino correctamente", product: product });
+    await this.productsService.deleteById(id);
+    res.render("productos", { username: req.oidc.user.nickname, products });
   };
   updateOne = async (req, res) => {
     const { id } = req.params;
     const product = await this.productsService.updateById(id, req.body);
-    res.json({ message: "Producto Actualizado con exito", product });
+    res.render("productos", { username: req.oidc.user.nickname });
   };
   createProduct = (req, res) => {
     res.render("agregarProducto", {
       username: req.oidc.user.nickname,
     });
+  };
+  editOne = async (req, res) => {
+    const { id } = req.params;
+    const product = await this.productsService.getById(id);
+    res.render("editarProducto", { username: req.oidc.user.nickname, product });
   };
 }

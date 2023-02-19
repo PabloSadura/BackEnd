@@ -17,17 +17,17 @@ export default class CartController {
   };
 
   postProducts = async (req, res) => {
-    const { id, stock } = req.body;
+    const { id } = req.body;
     const productServices = new ProductServices();
     const product = await productServices.getById(id);
     const { title, image, price, description } = product;
     const productCart = {
       email: req.oidc.user.email,
       title: title,
-      count: stock,
+      count: 1,
       image: image,
       description: description,
-      price: price * stock,
+      price: price,
     };
     this.cartServices.createCart(productCart);
     res.redirect("/products");

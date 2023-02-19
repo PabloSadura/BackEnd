@@ -19,8 +19,12 @@ export default class ProductsRouter {
       this.productsController.createProduct
     );
     productRouter.get("/:id", this.productsController.getById);
-    productRouter.delete("/:id", this.productsController.deleteOneProduct);
-    productRouter.put("/:id", this.productsController.updateOne);
+    productRouter.get(
+      "/deleteProduct/:id",
+      this.productsController.deleteOneProduct
+    );
+    productRouter.get("/editProduct/:id", this.productsController.editOne);
+    productRouter.post("/editProduct/:id", this.productsController.updateOne);
     return productRouter;
   }
 }

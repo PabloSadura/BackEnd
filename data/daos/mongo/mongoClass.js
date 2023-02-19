@@ -8,7 +8,7 @@ export default class ClassMongo {
   }
 
   async getById(id) {
-    return await this.collection.findById(id);
+    return await this.collection.findOne({ _id: id });
   }
   async create(obj) {
     return await this.collection(obj).save();

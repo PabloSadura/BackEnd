@@ -1,125 +1,116 @@
-<div class="col-md-6">
-  <h2 class="text-center pt-3">Medios de pago</h2>
-  <div class="form-check ms-4">
-    <input
-      class="form-check-input"
-      type="radio"
-      name="pagos"
-      id="efectivo"
-      checked
-    />
-    <label class="form-check-label" for="efectivo">
-      Efectivo / Transferencia
-    </label>
-  </div>
-  <div class="form-check ms-4">
-    <input class="form-check-input" type="radio" name="pagos" id="creditCard" />
-    <label class="form-check-label" for="tarjeta">
-      Tarjeta de Credito / Tarjeta Débito
-    </label>
-  </div>
-  <div class="credito">
-    <div class="contenedor">
-      <section class="tarjeta" id="tarjeta">
-        <div class="delantera">
-          <div class="logo-marca" id="logo-marca"></div>
-          <div>
-            <img src="../img/chip.jpg" alt="chip-tarjeta" class="chip" />
-            <i class="bi bi-broadcast contactless"></i>
+<h2 class="text-center pt-3">Medios de pago</h2>
+<div class="form-check ms-4">
+  <input
+    class="form-check-input"
+    type="radio"
+    name="pagos"
+    id="efectivo"
+    checked
+  />
+  <label class="form-check-label" for="efectivo">
+    Efectivo / Transferencia
+  </label>
+</div>
+<div class="form-check ms-4">
+  <input class="form-check-input" type="radio" name="pagos" id="creditCard" />
+  <label class="form-check-label" for="tarjeta">
+    Tarjeta de Credito / Tarjeta Débito
+  </label>
+</div>
+<div class="credito">
+  <div class="contenedor">
+    <section class="tarjeta" id="tarjeta">
+      <div class="delantera">
+        <div class="logo-marca" id="logo-marca"></div>
+        <div>
+          <img src="../img/chip.jpg" alt="chip-tarjeta" class="chip" />
+          <i class="bi bi-broadcast contactless"></i>
+        </div>
+        <div class="datos">
+          <div class="grupo" id="numero">
+            <p class="label">Numero Tarjeta</p>
+            <p class="numero">**** **** **** ****</p>
           </div>
-          <div class="datos">
-            <div class="grupo" id="numero">
-              <p class="label">Numero Tarjeta</p>
-              <p class="numero">**** **** **** ****</p>
+          <div class="flexbox">
+            <div class="grupo" id="nombre">
+              <p class="label">Nombre Tarjeta</p>
+              <p class="nombre">Jhon Doe</p>
             </div>
-            <div class="flexbox">
-              <div class="grupo" id="nombre">
-                <p class="label">Nombre Tarjeta</p>
-                <p class="nombre">Jhon Doe</p>
-              </div>
-              <div class="grupo" id="expiracion">
-                <p class="label">Fecha Venc.</p>
-                <p class="vencimiento">
-                  <span class="mes">MM</span> /
-                  <span class="year">AA</span>
-                </p>
-              </div>
+            <div class="grupo" id="expiracion">
+              <p class="label">Fecha Venc.</p>
+              <p class="vencimiento">
+                <span class="mes">MM</span> /
+                <span class="year">AA</span>
+              </p>
             </div>
           </div>
         </div>
-        <div class="trasera">
-          <div class="barra-magnetica"></div>
-          <div class="datos">
-            <div class="grupo" id="firma">
-              <p class="label">Firma</p>
-              <div class="firma">
-                <p></p>
-              </div>
-            </div>
-            <div class="grupo" id="ccv">
-              <p class="label">CCV</p>
-              <p class="ccv"></p>
-            </div>
-          </div>
-          <p class="leyenda">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius,
-            necessitatibus.
-          </p>
-          <a href="#" class="link-banco">www.tubanco.com</a>
-        </div>
-      </section>
-      <div class="contenedor-btn">
-        <button class="btn-abrir-formulario" id="btn-abrir-formulario">
-          <i class="fas fa-plus"></i>
-        </button>
       </div>
-      <!-- formulario de tarjeta -->
-      <form action="" id="formulario-tarjeta" class="formulario-tarjeta">
-        <div class="grupo">
-          <label for="inputNumero">Número Tarjeta</label>
-          <input
-            type="text"
-            id="inputNumero"
-            maxlength="19"
-            autocomplete="off"
-          />
-        </div>
-        <div class="grupo">
-          <label for="inputNombre">Nombre</label>
-          <input
-            type="text"
-            id="inputNombre"
-            maxlength="19"
-            autocomplete="off"
-          />
-        </div>
-        <div class="d-sm-flex justify-content-between mt-2">
-          <div class="grupo expira">
-            <label for="selectMes">Expiracion</label>
-            <div class="d-flex justify-content-between">
-              <div class="grupo-select">
-                <select name="mes" id="selectMes">
-                  <option disabled selected>Mes</option>
-                </select>
-                <i class="fas fa-angle-down"></i>
-              </div>
-              <div class="grupo-select">
-                <select name="year" id="selectYear">
-                  <option disabled selected>Año</option>
-                </select>
-                <i class="fas fa-angle-down"></i>
-              </div>
+      <div class="trasera">
+        <div class="barra-magnetica"></div>
+        <div class="datos">
+          <div class="grupo" id="firma">
+            <p class="label">Firma</p>
+            <div class="firma">
+              <p></p>
             </div>
           </div>
-          <div class="grupo-select">
-            <label for="inputCCV">CCV</label>
-            <input type="text" id="inputCCV" maxlength="3" />
+          <div class="grupo" id="ccv">
+            <p class="label">CCV</p>
+            <p class="ccv"></p>
           </div>
         </div>
-      </form>
+        <p class="leyenda">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius,
+          necessitatibus.
+        </p>
+        <a href="#" class="link-banco">www.tubanco.com</a>
+      </div>
+    </section>
+    <div class="contenedor-btn">
+      <button class="btn-abrir-formulario" id="btn-abrir-formulario">
+        <i class="fas fa-plus"></i>
+      </button>
     </div>
+    <!-- formulario de tarjeta -->
+    <form action="" id="formulario-tarjeta" class="formulario-tarjeta">
+      <div class="grupo">
+        <label for="inputNumero">Número Tarjeta</label>
+        <input type="text" id="inputNumero" maxlength="19" autocomplete="off" />
+      </div>
+      <div class="grupo">
+        <label for="inputNombre">Nombre</label>
+        <input type="text" id="inputNombre" maxlength="19" autocomplete="off" />
+      </div>
+      <div class="d-sm-flex justify-content-between mt-2">
+        <div class="grupo expira">
+          <label for="selectMes">Expiracion</label>
+          <div class="d-flex justify-content-between">
+            <div class="grupo-select">
+              <select name="mes" id="selectMes">
+                <option disabled selected>Mes</option>
+              </select>
+              <i class="fas fa-angle-down"></i>
+            </div>
+            <div class="grupo-select">
+              <select name="year" id="selectYear">
+                <option disabled selected>Año</option>
+              </select>
+              <i class="fas fa-angle-down"></i>
+            </div>
+          </div>
+        </div>
+        <div class="grupo-select">
+          <label for="inputCCV">CCV</label>
+          <input type="text" id="inputCCV" maxlength="3" />
+        </div>
+      </div>
+    </form>
   </div>
 </div>
+
+<!-- Script -->
+
 <script>
   const tarjeta = document.querySelector("#tarjeta"),
     btnAbrirFomulario = document.querySelector("#btn-abrir-formulario"),
@@ -152,11 +143,13 @@
   // giro la tarjeta hacia atras
   volverFrente = (e) =>
     e.target.matches(".contenedor") && tarjeta.classList.remove("active");
+
   // boton abrir formulario
   btnAbrirFomulario.addEventListener("click", () => {
     btnAbrirFomulario.classList.toggle("active");
     formulario.classList.toggle("active");
   });
+
   // Seleccionar mes generado dinamicamente
   for (let i = 1; i <= 12; i++) {
     let opcion = document.createElement("option");
@@ -197,7 +190,6 @@
       const imagen = document.createElement("img");
       for (let i = 0; i < 10; i++) {
         if (valorInput[0] == i) {
-          console.log(i);
           imagen.src = `../img/${i}.png`;
         }
       }

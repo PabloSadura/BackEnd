@@ -4,6 +4,7 @@
   <body>
     <header><%- include ('navbar')%></header>
     <main>
+      <%- include ('presentacion') %>
       <h1 class="text-center mt-4">Productos</h1>
       <div class="d-flex justify-content-center me-2 flex-wrap">
         <% products.forEach((el)=>{%>
@@ -14,15 +15,17 @@
             <img src="<%= el.image %>" class="card-img-top" />
             <figcaption><%= el.description %></figcaption>
             <p class="fs-2">$ <%= el.price %></p>
-            <div class="d-flex justify-content-end align-items-center">
-              <p class="m-0">Stock:</p>
-              <select name="stock" class="ms-2">
-                <% for(let i = 1; i<= el.stock; i++){ %>
-                <option value="<%= i %>"><%= i %></option>
-                <%}%>
-              </select>
-            </div>
-            <button type="submit" class="btn btn-light">Comprar</button>
+            <button type="submit" class="btn btn-secondary">Comprar</button>
+            <a
+              class="ms-2 border rounded p-1"
+              href="/products/editProduct/<%- el._id%>"
+              ><i class="bi bi-pencil"></i
+            ></a>
+            <a
+              class="ms-2 border rounded p-1"
+              href="/products/deleteProduct/<%- el._id%>"
+              ><i class="bi bi-trash"></i
+            ></a>
           </form>
         </div>
         <%}); %>
