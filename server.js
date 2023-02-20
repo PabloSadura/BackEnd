@@ -12,7 +12,7 @@ import { auth0 } from "./auth/auth.js";
 import ProductsRouter from "./routes/products.routes.js";
 import UserRouter from "./routes/user.routes.js";
 import CartRouter from "./routes/cart.routes.js";
-
+import graphqlFuntion from "./graphql/index.js";
 // Socket
 import { Server as HttpServer } from "http";
 import socketIO from "./config/socket.js";
@@ -55,7 +55,7 @@ app.use;
 app.use("/products", productsRouter.init());
 app.use("/", userRouter.init());
 app.use("/cart", cartRouter.init());
-
+app.use("/graphql", graphqlFuntion);
 // motores de plantilla
 app.set("views", "./views");
 app.set("view engine", "ejs");

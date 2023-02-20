@@ -4,32 +4,42 @@ import ProductServices from "../services/products.services.js";
 export default class CartController {
   constructor() {
     this.cartServices = new CartServices();
+    this.productServices = new ProductServices();
   }
 
   getProducts = async (req, res) => {
-    const productCart = await this.cartServices.cartUser(req.oidc.user.email);
-    const total = productCart.reduce((acc, el) => acc + el.price, 0);
-    res.render("cart", {
-      username: req.oidc.user.nickname,
-      productCart,
-      total: total,
-    });
+    const order = await this.#getOrder(req, res);
+    if (order) {
+      const { items } = order;
+      const total = items.reduce((acc, el) => acc + el.price, 0);
+      res.render("cart", {
+        username: req.oidc.user.nickname,
+        items,
+        total: total,
+      });
+    } else {
+      res.render("cart", { username: req.oidc.user.nickname, items: [] });
+    }
   };
 
   postProducts = async (req, res) => {
-    const { id } = req.body;
-    const productServices = new ProductServices();
-    const product = await productServices.getById(id);
-    const { title, image, price, description } = product;
-    const productCart = {
-      email: req.oidc.user.email,
-      title: title,
-      count: 1,
-      image: image,
-      description: description,
-      price: price,
-    };
-    this.cartServices.createCart(productCart);
+    const product = await this.productServices.getById(req.body.id);
+    const order = await this.#getOrder(req, res);
+    if (order) {
+      const obj = { ...product };
+      await this.cartServices.updateOne(req.oidc.user.email, obj);
+    } else {
+      const productCart = {
+        email: req.oidc.user.email,
+        items: [
+          {
+            ...product,
+          },
+        ],
+        buyOrder: false,
+      };
+      this.cartServices.createCart(productCart);
+    }
     res.redirect("/products");
   };
   putById = async (req, res) => {
@@ -45,9 +55,16 @@ export default class CartController {
   };
 
   order = async (req, res) => {
-    const products = await this.cartServices.cartUser(req.oidc.user.email);
-    // sendMail(req.oidc.user.nickname, req.oidc.user.email, products);
-    this.cartServices.deleteAllCart(req.oidc.email);
+    const order = await this.#getOrder(req, res);
+    // aca tengo que mandar el email con nodemailer
+    order.buyOrder = true;
+    await this.cartServices.updateOrder(order._id, order);
     res.render("ordenGenerada", { username: req.oidc.user.nickname });
+  };
+
+  #getOrder = async (req, res) => {
+    const productCart = await this.cartServices.cartUser(req.oidc.user.email);
+    const order = productCart.find((el) => el.buyOrder === false);
+    return order;
   };
 }

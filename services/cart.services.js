@@ -13,8 +13,11 @@ export default class CartServices {
     return this.mongoClass.create(obj);
   }
 
-  async updateOne(id, body) {
-    this.mongoClass.update(id, body);
+  async updateOne(email, obj) {
+    this.mongoClass.updateCart(email, obj);
+  }
+  async updateOrder(id, obj) {
+    this.mongoClass.updateById(id, obj);
   }
 
   async deleteOneinCart(id) {

@@ -24,9 +24,15 @@ export default class ClassMongo {
     return await this.collection.deleteMany();
   }
   async getByUser(user) {
-    return await this.collection.find({ id_username: user });
+    return await this.collection.find({ email: user });
   }
   async deleteAllCart(user) {
-    return await this.collection.deleteMany({ id_username: user });
+    return await this.collection.deleteMany({ email: user });
+  }
+  async updateCart(email, obj) {
+    return await this.collection.update(
+      { email: email },
+      { $push: { items: obj } }
+    );
   }
 }

@@ -16,7 +16,7 @@ export default class ProductsController {
   setOneProduct = async (req, res) => {
     console.log(req.body);
     try {
-      await this.productsService.setOneProduct(req.body);
+      await this.productsService.setOneProduct({ ...req.body, count: 1 });
       res.status(200).reder("productos");
     } catch (error) {
       res.status(500).json({ message: error });

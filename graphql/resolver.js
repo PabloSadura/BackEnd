@@ -1,6 +1,6 @@
-import ProductsControllers from "../controllers/product.controller.js";
+import ProductsController from "../controllers/products.controllers.js";
 
-const productsControllers = new ProductsControllers();
+const productsControllers = new ProductsController();
 
 export const resolvers = {
   Query: {

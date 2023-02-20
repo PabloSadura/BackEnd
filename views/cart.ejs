@@ -4,10 +4,10 @@
   <body>
     <%- include('navbar')%>
     <main class="row">
-      <% if(productCart.length !== 0 ){%>
+      <% if(items.length !== 0 ){%>
       <section class="d-md-flex mt-3 mb-3 p-4">
         <div class="col-12 col-md-6 p-4 border">
-          <% productCart.forEach((el)=>{%>
+          <% items.forEach((el)=>{%>
           <table class="table border rounded shadow">
             <thead>
               <tr>
