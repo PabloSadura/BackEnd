@@ -14,7 +14,6 @@ export default class ProductsController {
     }
   };
   setOneProduct = async (req, res) => {
-    console.log(req.body);
     try {
       await this.productsService.setOneProduct({ ...req.body, count: 1 });
       res.status(200).reder("productos");
@@ -30,6 +29,7 @@ export default class ProductsController {
   deleteOneProduct = async (req, res) => {
     const { id } = req.params;
     await this.productsService.deleteById(id);
+    const product = await this.productsService.getAllProducts();
     res.render("productos", { username: req.oidc.user.nickname, products });
   };
   updateOne = async (req, res) => {

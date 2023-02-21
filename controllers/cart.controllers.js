@@ -1,10 +1,11 @@
 import CartServices from "../services/cart.services.js";
 import ProductServices from "../services/products.services.js";
-
+import { OrderEmail } from "../config/mailer.js";
 export default class CartController {
   constructor() {
     this.cartServices = new CartServices();
     this.productServices = new ProductServices();
+    this.orderMail = new OrderEmail();
   }
 
   getProducts = async (req, res) => {
@@ -24,7 +25,7 @@ export default class CartController {
 
   postProducts = async (req, res) => {
     const product = await this.productServices.getById(req.body.id);
-    const order = await this.#getOrder(req, res);
+    const order = await this.#getOrder(req);
     if (order) {
       const obj = { ...product };
       await this.cartServices.updateOne(req.oidc.user.email, obj);
@@ -50,19 +51,22 @@ export default class CartController {
   };
   deleteOneCart = async (req, res) => {
     const { id } = req.params;
-    this.cartServices.deleteOneinCart(id);
+    console.log(id);
+    const order = await this.#getOrder(req);
+    console.log(order);
+    await this.cartServices.deleteOrderById(id, order);
     res.redirect("/cart");
   };
 
   order = async (req, res) => {
     const order = await this.#getOrder(req, res);
-    // aca tengo que mandar el email con nodemailer
+    this.orderMail.orderEmail(req.oidc.user.email, order);
     order.buyOrder = true;
     await this.cartServices.updateOrder(order._id, order);
     res.render("ordenGenerada", { username: req.oidc.user.nickname });
   };
 
-  #getOrder = async (req, res) => {
+  #getOrder = async (req) => {
     const productCart = await this.cartServices.cartUser(req.oidc.user.email);
     const order = productCart.find((el) => el.buyOrder === false);
     return order;

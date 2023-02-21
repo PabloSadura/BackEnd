@@ -20,8 +20,8 @@ export default class CartServices {
     this.mongoClass.updateById(id, obj);
   }
 
-  async deleteOneinCart(id) {
-    this.mongoClass.deleteById(id);
+  async deleteOrderById(id, order) {
+    this.mongoClass.deleteOrderById(id, order);
   }
 
   async deleteAllCart(user) {

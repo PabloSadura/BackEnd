@@ -56,11 +56,10 @@ app.use("/products", productsRouter.init());
 app.use("/", userRouter.init());
 app.use("/cart", cartRouter.init());
 app.use("/graphql", graphqlFuntion);
+
 // motores de plantilla
 app.set("views", "./views");
 app.set("view engine", "ejs");
-
-// Conectado Socket
 
 const PORT = config.PORT;
 

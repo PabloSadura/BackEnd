@@ -20,7 +20,11 @@ export default class ClassMongo {
   async deleteById(id) {
     return await this.collection.deleteOne({ _id: id });
   }
-  async delteAll() {
+  async deleteOrderById(id, order) {
+    return await this.collection.deleteOne({ "order.items": "id" });
+  }
+
+  async deleteAll() {
     return await this.collection.deleteMany();
   }
   async getByUser(user) {
