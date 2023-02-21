@@ -1,14 +1,29 @@
 import ProductsServices from "../services/products.services.js";
-
+import CartController from "./cart.controllers.js";
 export default class ProductsController {
   constructor() {
     this.productsService = new ProductsServices();
+    this.cartController = new CartController();
   }
 
   getAllProducts = async (req, res) => {
     try {
       const products = await this.productsService.getAllProducts();
-      res.render("productos", { username: req.oidc.user.nickname, products });
+      const order = await this.cartController.getOrder(req);
+      if (!order) {
+        res.render("productos", {
+          username: req.oidc.user.nickname,
+          products,
+          items: [],
+        });
+      } else {
+        const { items } = order;
+        res.render("productos", {
+          username: req.oidc.user.nickname,
+          products,
+          items,
+        });
+      }
     } catch (error) {
       res.status(500).json({ message: error });
     }

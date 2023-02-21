@@ -9,7 +9,7 @@ export default class CartController {
   }
 
   getProducts = async (req, res) => {
-    const order = await this.#getOrder(req, res);
+    const order = await this.getOrder(req, res);
     if (order) {
       const { items } = order;
       const total = items.reduce((acc, el) => acc + el.price, 0);
@@ -25,7 +25,7 @@ export default class CartController {
 
   postProducts = async (req, res) => {
     const product = await this.productServices.getById(req.body.id);
-    const order = await this.#getOrder(req);
+    const order = await this.getOrder(req);
     if (order) {
       const obj = { ...product };
       await this.cartServices.updateOne(req.oidc.user.email, obj);
@@ -51,22 +51,20 @@ export default class CartController {
   };
   deleteOneCart = async (req, res) => {
     const { id } = req.params;
-    console.log(id);
-    const order = await this.#getOrder(req);
-    console.log(order);
+    const order = await this.getOrder(req);
     await this.cartServices.deleteOrderById(id, order);
     res.redirect("/cart");
   };
 
   order = async (req, res) => {
-    const order = await this.#getOrder(req, res);
+    const order = await this.getOrder(req, res);
     this.orderMail.orderEmail(req.oidc.user.email, order);
     order.buyOrder = true;
     await this.cartServices.updateOrder(order._id, order);
     res.render("ordenGenerada", { username: req.oidc.user.nickname });
   };
 
-  #getOrder = async (req) => {
+  getOrder = async (req) => {
     const productCart = await this.cartServices.cartUser(req.oidc.user.email);
     const order = productCart.find((el) => el.buyOrder === false);
     return order;

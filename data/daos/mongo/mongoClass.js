@@ -21,7 +21,10 @@ export default class ClassMongo {
     return await this.collection.deleteOne({ _id: id });
   }
   async deleteOrderById(id, order) {
-    return await this.collection.deleteOne({ "order.items": "id" });
+    const data = await this.collection.findById({ _id: order._id });
+    const item = data.items.find((el) => el.id === id);
+    data.items.pull(item);
+    return await data.save();
   }
 
   async deleteAll() {
