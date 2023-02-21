@@ -1,7 +1,8 @@
+import CartController from "../controllers/cart.controllers.js";
 import ProductsController from "../controllers/products.controllers.js";
 
 const productsControllers = new ProductsController();
-
+const cartController = new CartController();
 export const resolvers = {
   Query: {
     getAllProducts: async () => {
@@ -9,6 +10,12 @@ export const resolvers = {
     },
     getById: async (_, { id }) => {
       return productsControllers.getById(id);
+    },
+    getProducts: async () => {
+      return cartController.getProducts();
+    },
+    getOrder: async (_, input) => {
+      return cartController.getOrder(input);
     },
   },
   Mutation: {
