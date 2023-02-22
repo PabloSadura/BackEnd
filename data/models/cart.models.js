@@ -10,6 +10,7 @@ const cartSchema = mongoose.Schema({
       price: Number,
     },
   ],
+  date: Date,
   buyOrder: Boolean,
 });
 

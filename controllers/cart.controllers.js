@@ -37,6 +37,7 @@ export default class CartController {
             ...product,
           },
         ],
+        date: Date.now(),
         buyOrder: false,
       };
       this.cartServices.createCart(productCart);
@@ -64,7 +65,7 @@ export default class CartController {
     res.render("ordenGenerada", { username: req.oidc.user.nickname });
   };
 
-  getOrder = async (req) => {
+  getOrder = async (req, res) => {
     const productCart = await this.cartServices.cartUser(req.oidc.user.email);
     const order = productCart.find((el) => el.buyOrder === false);
     return order;

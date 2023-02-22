@@ -45,7 +45,7 @@ export default class ProductsController {
     const { id } = req.params;
     await this.productsService.deleteById(id);
     const product = await this.productsService.getAllProducts();
-    res.render("productos", { username: req.oidc.user.nickname, products });
+    res.render("productos", { username: req.oidc.user.nickname, product });
   };
   updateOne = async (req, res) => {
     const { id } = req.params;

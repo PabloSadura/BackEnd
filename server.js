@@ -13,6 +13,8 @@ import ProductsRouter from "./routes/products.routes.js";
 import UserRouter from "./routes/user.routes.js";
 import CartRouter from "./routes/cart.routes.js";
 import graphqlFuntion from "./graphql/index.js";
+import ChatRouter from "./routes/chat.routes.js";
+
 // Socket
 import { Server as HttpServer } from "http";
 import socketIO from "./config/socket.js";
@@ -26,6 +28,7 @@ const app = express();
 const productsRouter = new ProductsRouter();
 const userRouter = new UserRouter();
 const cartRouter = new CartRouter();
+const chatRouter = new ChatRouter();
 
 // Instanciando Socket.io
 const httpServer = new HttpServer(app);
@@ -55,6 +58,7 @@ app.use;
 app.use("/products", productsRouter.init());
 app.use("/", userRouter.init());
 app.use("/cart", cartRouter.init());
+app.use("/chat", chatRouter.init());
 app.use("/graphql", graphqlFuntion);
 
 // motores de plantilla

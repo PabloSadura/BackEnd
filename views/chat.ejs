@@ -1,63 +1,65 @@
-<button
-  class="btn btn-primary"
-  type="button"
-  data-bs-toggle="offcanvas"
-  data-bs-target="#offcanvasRight"
-  aria-controls="offcanvasRight"
->
-  Chat
-</button>
-
-<div
-  class="offcanvas offcanvas-end"
-  tabindex="-1"
-  id="offcanvasRight"
-  aria-labelledby="offcanvasRightLabel"
->
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasRightLabel">Chat</h5>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="offcanvas"
-      aria-label="Close"
-    ></button>
-  </div>
-  <ul class="list-group">
-    <li></li>
-  </ul>
-
-  <form action="" class="px-2" id="form-chat">
-    <input
-      type="text"
-      name="chat"
-      class="form-control"
-      id="input-chat"
-      placeholder="Ingresar Mensaje"
-    />
-    <button type="submit" class="btn btn-primary m-2">Enviar</button>
-  </form>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ('head')%>
+  <body>
+    <header><%- include ('navbarChat') %></header>
+    <div class="container">
+      <div class="row">
+        <div id="saludo"></div>
+        <ul class="list-group">
+          <div id="card-Chat"></div>
+        </ul>
+        <form action="" class="fixed-bottom p-2" id="form-chat">
+          <input
+            type="text"
+            name="email"
+            placeholder="Ingresar su Email"
+            class="form-control"
+            id="input-email"
+          />
+          <input
+            type="text"
+            name="msj"
+            placeholder="Ingresar el Mensaje"
+            class="form-control mt-2"
+            id="input-msj"
+          />
+          <button class="btn btn-primary mt-2 w-100">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
 
 <!-- Script -->
 <script>
   const socket = io();
   const form = document.querySelector("#form-chat");
-  const inputChat = document.querySelector("#input-chat");
-  const message = document.querySelector("ul");
+  const inputMsj = document.querySelector("#input-msj");
+  const inputEmail = document.querySelector("#input-email");
+  const ul = document.querySelector("ul");
+  const cardChat = document.querySelector("#card-Chat");
+  const saludo = document.querySelector("#saludo");
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (inputChat.value) {
-      socket.emit("chatMessage", inputChat.value);
-      inputChat.value = "";
+    if (inputMsj.value && inputEmail.value) {
+      socket.emit("chatMessage", {
+        email: inputEmail.value,
+        message: inputMsj.value,
+      });
+      (inputEmail.value = ""), (inputMsj.value = "");
     }
   });
-
   socket.on("chatMessage", (msg) => {
     const item = document.createElement("li");
-    item.textContent = msg;
-    message.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
+    item.innerHTML = `
+      <div class="w-25 border rounded mt-2 p-2">
+        <div class="toast-header">
+          <strong class="me-auto">${msg.email}</strong>
+        </div>
+        <div class="toast-body">${msg.message}</div>
+      </div>`;
+    ul.appendChild(item);
   });
 </script>
