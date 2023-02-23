@@ -7,7 +7,9 @@ export default class ChatRouter {
     this.chatController = new ChatController();
   }
   init() {
-    chatRouter.get("/", this.chatController.getChat);
+    chatRouter.get("/", this.chatController.chat);
+    chatRouter.post("/history", this.chatController.getChat);
+    chatRouter.post("/newMessage", this.chatController.newChat);
     return chatRouter;
   }
 }

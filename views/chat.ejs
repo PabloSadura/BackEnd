@@ -5,27 +5,47 @@
     <header><%- include ('navbarChat') %></header>
     <div class="container">
       <div class="row">
-        <div id="saludo"></div>
-        <ul class="list-group">
-          <div id="card-Chat"></div>
-        </ul>
-        <form action="" class="fixed-bottom p-2" id="form-chat">
-          <input
-            type="text"
-            name="email"
-            placeholder="Ingresar su Email"
-            class="form-control"
-            id="input-email"
-          />
-          <input
-            type="text"
-            name="msj"
-            placeholder="Ingresar el Mensaje"
-            class="form-control mt-2"
-            id="input-msj"
-          />
-          <button class="btn btn-primary mt-2 w-100">Enviar</button>
-        </form>
+        <div class="d-flex justify-content-end p-2">
+          <form action="/chat/history" method="post" class="d-flex">
+            <input type="email" name="email" class="form-control" />
+            <button class="btn btn-secondary ms-2">Buscar Historial</button>
+          </form>
+        </div>
+        <div class="row">
+          <ul class="list-group">
+            <%if (chats){%> <% chats.forEach((el)=>{%>
+            <div class="w-25 border rounded mt-2 p-2">
+              <div class="toast-header">
+                <strong class="me-auto"><%= el.email %></strong>
+              </div>
+              <div class="toast-body"><%= el.message %></div>
+            </div>
+            <%})%> <%}%>
+            <div id="card-Chat"></div>
+          </ul>
+          <form
+            action="/chat/newMessage"
+            method="post"
+            class="fixed-bottom p-2"
+            id="form-chat"
+          >
+            <input
+              type="text"
+              name="email"
+              placeholder="Ingresar su Email"
+              class="form-control"
+              id="input-email"
+            />
+            <input
+              type="text"
+              name="message"
+              placeholder="Ingresar el Mensaje"
+              class="form-control mt-2"
+              id="input-msj"
+            />
+            <button class="btn btn-primary mt-2 w-100">Enviar</button>
+          </form>
+        </div>
       </div>
     </div>
   </body>

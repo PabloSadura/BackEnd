@@ -9,4 +9,7 @@ export default class ChatServices {
   getAll = async (email) => {
     return await this.mongoClass.getByUser(email);
   };
+  newChat = async (obj) => {
+    return await this.mongoClass.create(obj);
+  };
 }
