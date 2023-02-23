@@ -1,6 +1,5 @@
 import { Router } from "express";
 import CartController from "../controllers/cart.controllers.js";
-import { cartModel } from "../data/models/cart.models.js";
 
 const cartRouter = Router();
 export default class CartRouter {

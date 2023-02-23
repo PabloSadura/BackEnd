@@ -62,7 +62,10 @@ export default class CartController {
     this.orderMail.orderEmail(req.oidc.user.email, order);
     order.buyOrder = true;
     await this.cartServices.updateOrder(order._id, order);
-    res.render("ordenGenerada", { username: req.oidc.user.nickname });
+    res.render("ordenGenerada", {
+      username: req.oidc.user.nickname,
+      items: [],
+    });
   };
 
   getOrder = async (req, res) => {

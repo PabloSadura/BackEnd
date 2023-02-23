@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> </head>
+  <body>
+    <h1>Gracias por su compra!</h1>
+    <h3>ID de compra N° <%= data._id %></h3>
+    <h4>Producto/s adquirido/s :</h4>
+    <ul>
+      <% data.item.forEach ((el)=>{%>
+      <li>
+        <h5><%= el.title%></h5>
+        <p>Cantidad: <%= el.count%> <span>$ <%= el.price%></span></p>
+      </li>
+      <%})%>
+    </ul>
+  </body>
+</html>
