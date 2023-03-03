@@ -1,4 +1,4 @@
-import ClassMongo from "../data/daos/Mongo/mongoClass.js";
+import ClassMongo from "../data/daos/mongo/mongoClass.js";
 import { chatModel } from "../data/models/chat.models.js";
 
 export default class ChatServices {
