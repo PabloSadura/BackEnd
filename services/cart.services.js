@@ -1,4 +1,4 @@
-import ClassMongo from "../data/daos/Mongo/mongoClass.js";
+import ClassMongo from "../data/daos/mongo/mongoClass.js";
 import { cartModel } from "../data/models/cart.models.js";
 export default class CartServices {
   constructor() {
